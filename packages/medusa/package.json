@@ -27,7 +27,9 @@
     "@tiptap/pm": "^3.31.3",
     "@tiptap/react": "^3.31.3",
     "@tiptap/starter-kit": "^3.31.3",
-    "dotenv": "^16.4.0"
+    "dotenv": "^16.4.0",
+    "express-rate-limit": "^8",
+    "jose": "^6"
   },
   "devDependencies": {
     "@ariakit/react": "^0.4.15",

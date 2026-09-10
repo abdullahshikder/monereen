@@ -8,9 +8,9 @@ import { formatAmount, getOrderForConfirmation } from "@/lib/commerce"
 export default async function OrderConfirmationPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const order = await getOrderForConfirmation(params.id)
+  const order = await getOrderForConfirmation((await params).id)
   if (!order) {
     notFound()
   }

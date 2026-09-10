@@ -19,9 +19,9 @@ async function getCollectionPage(slug: string) {
 export default async function CollectionLandingPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const data = await getCollectionPage(params.slug);
+  const data = await getCollectionPage((await params).slug);
 
   if (!data?.page) {
     // Fallback to standard collection page

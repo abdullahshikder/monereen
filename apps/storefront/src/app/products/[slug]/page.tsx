@@ -14,9 +14,9 @@ import {
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const product = await getProductByHandle(params.slug);
+  const product = await getProductByHandle((await params).slug);
 
   if (!product) {
     notFound();

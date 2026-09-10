@@ -6,21 +6,20 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint",
+    "lint": "eslint src",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .next node_modules"
   },
   "dependencies": {
     "@measured/puck": "^0.17.0",
     "@medusajs/js-sdk": "^2.0.0",
-    "@medusajs/modules-sdk": "^1.0.0",
     "@monereen/page-builder": "workspace:*",
     "@monereen/tokens": "workspace:*",
     "@monereen/types": "workspace:*",
     "@monereen/ui": "workspace:*",
     "@phosphor-icons/react": "^2.1.10",
     "motion": "^11.0.0",
-    "next": "^14.2.0",
+    "next": "15.5.25",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },
@@ -30,7 +29,7 @@
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.35",
+    "eslint-config-next": "15.5.25",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.5.0"

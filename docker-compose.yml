@@ -4,7 +4,7 @@ services:
     container_name: monereen-postgres
     environment:
       POSTGRES_USER: monereen
-      POSTGRES_PASSWORD: monereen
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
       POSTGRES_DB: monereen
     ports:
       - "5432:5432"
@@ -34,8 +34,8 @@ services:
     container_name: monereen-minio
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?Set MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Set MINIO_ROOT_PASSWORD}
     ports:
       - "9002:9000"
       - "9001:9001"
@@ -50,7 +50,7 @@ services:
     command:
       - -c
       - >-
-        until mc alias set local http://minio:9000 minioadmin minioadmin; do sleep 1; done;
+        until mc alias set local http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}; do sleep 1; done;
         mc mb --ignore-existing local/monereen-media;
         mc anonymous set download local/monereen-media
 
@@ -62,7 +62,7 @@ services:
     container_name: monereen-medusa
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgres://monereen:monereen@postgres:5432/monereen
+      DATABASE_URL: ${DOCKER_DATABASE_URL:?Set DOCKER_DATABASE_URL}
       REDIS_URL: redis://redis:6379
       JWT_SECRET: dev-jwt-secret-change-in-production
       COOKIE_SECRET: dev-cookie-secret-change-in-production
@@ -72,8 +72,8 @@ services:
       MEDUSA_BACKEND_URL: http://localhost:9000
       MINIO_ENDPOINT: minio
       MINIO_PORT: 9000
-      MINIO_ACCESS_KEY: minioadmin
-      MINIO_SECRET_KEY: minioadmin
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
       MINIO_BUCKET: monereen-media
       MINIO_FILE_URL: http://localhost:9002/monereen-media
     ports:

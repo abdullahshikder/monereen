@@ -80,16 +80,16 @@ function getCollectionEdit(slug: string): CollectionEdit {
   };
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const collection = getCollectionEdit(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const collection = getCollectionEdit((await params).slug);
   return {
     title: collection.title,
     description: collection.description,
   };
 }
 
-export default function CollectionPage({ params }: { params: { slug: string } }) {
-  const collection = getCollectionEdit(params.slug);
+export default async function CollectionPage({ params }: { params: Promise<{ slug: string }> }) {
+  const collection = getCollectionEdit((await params).slug);
 
   return (
     <>

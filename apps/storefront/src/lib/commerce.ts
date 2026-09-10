@@ -147,7 +147,8 @@ export function getVariantLabel(variant: ProductVariant): string {
 }
 
 export async function getCart(): Promise<Cart | null> {
-  const cartId = cookies().get(CART_COOKIE)?.value
+  const cookieStore = await cookies()
+  const cartId = cookieStore.get(CART_COOKIE)?.value
 
   if (!cartId) {
     return null
@@ -169,6 +170,7 @@ export async function getCartQuantity(): Promise<number> {
 }
 
 export async function getOrCreateCart(): Promise<Cart> {
+  const cookieStore = await cookies()
   const existingCart = await getCart()
 
   if (existingCart) {
@@ -182,7 +184,7 @@ export async function getOrCreateCart(): Promise<Cart> {
     cache: "no-store",
   })
 
-  cookies().set(CART_COOKIE, data.cart.id, {
+  cookieStore.set(CART_COOKIE, data.cart.id, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -320,6 +322,7 @@ export async function initializePaymentSession(
 }
 
 export async function completeCart(cartId: string): Promise<Order> {
+  const cookieStore = await cookies()
   const result = await storeRequest<CompleteCartResult>(
     `/store/carts/${cartId}/complete`,
     { method: "POST", cache: "no-store" },
@@ -329,8 +332,8 @@ export async function completeCart(cartId: string): Promise<Order> {
     throw new Error(result.error.message)
   }
 
-  cookies().delete(CART_COOKIE)
-  cookies().set(LAST_ORDER_COOKIE, result.order.id, {
+  cookieStore.delete(CART_COOKIE)
+  cookieStore.set(LAST_ORDER_COOKIE, result.order.id, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -344,7 +347,8 @@ export async function completeCart(cartId: string): Promise<Order> {
 export async function getOrderForConfirmation(
   orderId: string,
 ): Promise<Order | null> {
-  if (cookies().get(LAST_ORDER_COOKIE)?.value !== orderId) {
+  const cookieStore = await cookies()
+  if (cookieStore.get(LAST_ORDER_COOKIE)?.value !== orderId) {
     return null
   }
 

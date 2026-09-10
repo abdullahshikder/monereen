@@ -10,9 +10,9 @@ const getPage = cache((slug: string) => getPublishedPageBySlug(slug));
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const page = await getPage(params.slug);
+  const page = await getPage((await params).slug);
   if (!page) return { title: "Page not found" };
 
   return {
@@ -24,9 +24,9 @@ export async function generateMetadata({
 export default async function DynamicPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const page = await getPage(params.slug);
+  const page = await getPage((await params).slug);
   const pageData = page?.pageData ?? null;
 
   if (!pageData) {

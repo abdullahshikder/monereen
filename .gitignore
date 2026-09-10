@@ -41,3 +41,9 @@ docker-compose.override.yml
 .medusa/
 packages/medusa/.github/
 packages/medusa/static/
+
+# Local backup material and alternate production builds
+.backups/
+.next-*/
+
+.runtime/

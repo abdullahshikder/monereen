@@ -3,6 +3,15 @@ import type { InputConfigWithObjectModules } from "@medusajs/framework/types"
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd())
 
+if (process.env.NODE_ENV === "production") {
+  for (const key of ["JWT_SECRET", "COOKIE_SECRET"]) {
+    const value = process.env[key]
+    if (!value || value.length < 32 || /supersecret|change.this/i.test(value)) {
+      throw new Error(`${key} must be a strong secret in production`)
+    }
+  }
+}
+
 const minioEndpoint = process.env.MINIO_ENDPOINT
 const minioPort = process.env.MINIO_PORT
 const minioBucket = process.env.MINIO_BUCKET

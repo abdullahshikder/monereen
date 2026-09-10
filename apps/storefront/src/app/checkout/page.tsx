@@ -312,14 +312,14 @@ function DeliveryStep({
 export default async function CheckoutPage({
   searchParams,
 }: {
-  searchParams: { step?: string; error?: string }
+  searchParams: Promise<{ step?: string; error?: string }>
 }) {
   const cart = await getCart()
   if (!cart?.items?.length) {
     redirect("/cart")
   }
 
-  const deliveryStep = searchParams.step === "delivery"
+  const deliveryStep = (await searchParams).step === "delivery"
   if (deliveryStep && !cart.shipping_address) {
     redirect("/checkout?step=address")
   }
@@ -352,9 +352,9 @@ export default async function CheckoutPage({
                 : "Step 1 of 2 · Contact and address"}
             </p>
 
-            {searchParams.error && (
+            {(await searchParams).error && (
               <p className="mb-8 border border-accent bg-accent/5 p-4 font-body text-sm text-accent">
-                {searchParams.error}
+                {(await searchParams).error}
               </p>
             )}
             {optionsFailed && (
