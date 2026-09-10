@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.yarn/
+.yarnrc.yml
+
+# Build outputs
+dist/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+
+# Docker
+docker-compose.override.yml
+
+# Medusa
+.medusa/
+packages/medusa/.github/
+packages/medusa/static/

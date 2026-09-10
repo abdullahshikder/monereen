@@ -1,0 +1,44 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./.next",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "ES2017",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@monereen/types": [
+        "../../packages/types/src"
+      ],
+      "@monereen/tokens": [
+        "../../packages/design-tokens/src"
+      ],
+      "@monereen/ui": [
+        "../../packages/ui/src"
+      ],
+      "@monereen/page-builder": [
+        "../../packages/page-builder/src"
+      ]
+    },
+    "allowJs": true,
+    "noEmit": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

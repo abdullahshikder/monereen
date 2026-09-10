@@ -1,0 +1,111 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: monereen-postgres
+    environment:
+      POSTGRES_USER: monereen
+      POSTGRES_PASSWORD: monereen
+      POSTGRES_DB: monereen
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monereen"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: monereen-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: monereen-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9002:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - >-
+        until mc alias set local http://minio:9000 minioadmin minioadmin; do sleep 1; done;
+        mc mb --ignore-existing local/monereen-media;
+        mc anonymous set download local/monereen-media
+
+  medusa:
+    build:
+      context: .
+      dockerfile: packages/medusa/Dockerfile
+      target: development
+    container_name: monereen-medusa
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://monereen:monereen@postgres:5432/monereen
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev-jwt-secret-change-in-production
+      COOKIE_SECRET: dev-cookie-secret-change-in-production
+      STORE_CORS: http://localhost:3000
+      ADMIN_CORS: http://localhost:9000
+      AUTH_CORS: http://localhost:3000,http://localhost:9000
+      MEDUSA_BACKEND_URL: http://localhost:9000
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: 9000
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+      MINIO_BUCKET: monereen-media
+      MINIO_FILE_URL: http://localhost:9002/monereen-media
+    ports:
+      - "9000:9000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    volumes:
+      - ./packages/medusa/src:/app/packages/medusa/src
+
+  storefront:
+    build:
+      context: .
+      dockerfile: apps/storefront/Dockerfile
+      target: development
+    container_name: monereen-storefront
+    environment:
+      MEDUSA_BACKEND_URL: http://medusa:9000
+      MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: http://localhost:9000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - medusa
+    volumes:
+      - ./apps/storefront/src:/app/apps/storefront/src
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

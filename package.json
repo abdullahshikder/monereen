@@ -1,0 +1,27 @@
+{
+  "name": "monereen",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Editorial commerce platform — products inside stories",
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:storefront": "turbo dev --filter=storefront",
+    "dev:medusa": "turbo dev --filter=@monereen/medusa",
+    "build": "turbo build",
+    "build:storefront": "turbo build --filter=storefront",
+    "build:medusa": "turbo build --filter=@monereen/medusa",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.5.0",
+    "yaml": "^2.4.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

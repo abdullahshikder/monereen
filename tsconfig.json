@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@monereen/types": ["./packages/types/src"],
+      "@monereen/tokens": ["./packages/design-tokens/src"],
+      "@monereen/ui": ["./packages/ui/src"],
+      "@monereen/page-builder": ["./packages/page-builder/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", ".turbo"]
+}
