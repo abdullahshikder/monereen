@@ -12,7 +12,7 @@
     "start": "medusa start",
     "dev": "medusa develop",
     "test": "NODE_OPTIONS=--experimental-vm-modules TEST_TYPE=integration:http SEED_DEMO_PRODUCTS=true PORT=19000 jest --runInBand",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "DISABLE_MEDUSA_ADMIN=true medusa build",
     "clean": "rm -rf dist node_modules .medusa"
   },
   "dependencies": {
