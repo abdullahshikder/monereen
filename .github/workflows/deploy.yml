@@ -10,16 +10,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      vars.ENABLE_VPS_DEPLOYMENT == 'true' &&
+      (github.event_name == 'workflow_dispatch' ||
       (github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.head_branch == 'main')
+      github.event.workflow_run.head_branch == 'main'))
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}

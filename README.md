@@ -114,6 +114,11 @@ cp .env.example .env
 docker compose -f docker-compose.prod.yml up -d
 ```
 
+GitHub deploys successful `main` builds only when the repository variable
+`ENABLE_VPS_DEPLOYMENT` is set to `true`. Before enabling it, add the
+`VPS_HOST`, `VPS_USER`, and `VPS_SSH_KEY` repository secrets and clone this
+repository to `/opt/monereen` on the server.
+
 ### Environment Variables
 
 See `.env.example` for all required variables. In production:
