@@ -1,7 +1,6 @@
 "use client";
 
-import { CaretDown } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 const chapters = [
@@ -15,9 +14,9 @@ type ChapterId = (typeof chapters)[number]["id"];
 
 export function MagazineChapterNav() {
   const [activeId, setActiveId] = useState<ChapterId>(chapters[0].id);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
   const activeChapter = chapters.find((chapter) => chapter.id === activeId) ?? chapters[0];
+  const activeIndex = chapters.findIndex((chapter) => chapter.id === activeId);
+  const progress = ((activeIndex + 1) / chapters.length) * 100;
 
   useEffect(() => {
     const sections = chapters
@@ -39,77 +38,25 @@ export function MagazineChapterNav() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!mobileOpen) return;
-
-    const closeMenu = (event: MouseEvent) => {
-      if (!navRef.current?.contains(event.target as Node)) setMobileOpen(false);
-    };
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobileOpen(false);
-    };
-
-    document.addEventListener("click", closeMenu);
-    window.addEventListener("keydown", closeOnEscape);
-    return () => {
-      document.removeEventListener("click", closeMenu);
-      window.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [mobileOpen]);
-
   return (
-    <nav ref={navRef} aria-label="Magazine chapters" className={styles.chapterNav}>
-      <p className={styles.chapterIssue}>Issue 01</p>
-
-      <div className={styles.chapterDesktopLinks}>
-        {chapters.map((chapter) => {
-          const active = chapter.id === activeId;
-
-          return (
-            <a
-              key={chapter.id}
-              href={`#${chapter.id}`}
-              aria-current={active ? "location" : undefined}
-              className={active ? styles.chapterActive : undefined}
-            >
-              <span>{chapter.number}</span>
-              {chapter.title}
-            </a>
-          );
-        })}
-      </div>
-
-      <div className={styles.chapterMobile}>
-        <button
-          type="button"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-chapter-list"
-          onClick={() => setMobileOpen((open) => !open)}
-        >
+    <aside aria-label="Magazine reading progress" className={styles.chapterNav}>
+      <div className={styles.chapterMeta}>
+        <p className={styles.chapterIssue}>Issue 01</p>
+        <p className={styles.chapterStatus} aria-live="polite">
           <span>{activeChapter.number} / 04</span>
           {activeChapter.title}
-          <CaretDown size={13} aria-hidden="true" />
-        </button>
-
-        <div
-          id="mobile-chapter-list"
-          className={`${styles.chapterMobileList} ${mobileOpen ? styles.chapterMobileListOpen : ""}`}
-          aria-hidden={!mobileOpen}
-        >
-          {chapters.map((chapter) => (
-            <a
-              key={chapter.id}
-              href={`#${chapter.id}`}
-              aria-current={chapter.id === activeId ? "location" : undefined}
-              onClick={() => setMobileOpen(false)}
-            >
-              <span>{chapter.number}</span>
-              {chapter.title}
-            </a>
-          ))}
-        </div>
+        </p>
       </div>
-    </nav>
+      <div
+        className={styles.chapterTrack}
+        role="progressbar"
+        aria-label="Magazine chapter progress"
+        aria-valuemin={1}
+        aria-valuemax={chapters.length}
+        aria-valuenow={activeIndex + 1}
+      >
+        <span className={styles.chapterTrackFill} style={{ width: `${progress}%` }} />
+      </div>
+    </aside>
   );
 }

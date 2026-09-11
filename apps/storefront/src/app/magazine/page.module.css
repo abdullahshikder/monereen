@@ -183,14 +183,17 @@
   position: sticky;
   z-index: 40;
   top: 4rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  min-height: 3.5rem;
-  padding: 0 1.5rem;
+  padding: 0.75rem 1.5rem 0;
   border-block: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper-raised) 94%, transparent);
   backdrop-filter: blur(14px);
+}
+
+.chapterMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.7rem;
 }
 
 .chapterIssue {
@@ -200,60 +203,33 @@
   text-transform: uppercase;
 }
 
-.chapterDesktopLinks {
+.chapterStatus {
   display: flex;
-  align-self: stretch;
-  align-items: stretch;
-}
-
-.chapterDesktopLinks a {
-  position: relative;
-  display: flex;
-  min-width: 9rem;
   align-items: center;
-  justify-content: center;
   gap: 0.65rem;
-  padding-inline: 1rem;
-  color: var(--muted);
   font-size: 0.61rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: color 180ms ease;
 }
 
-.chapterDesktopLinks a::after {
-  position: absolute;
-  right: 1rem;
-  bottom: -1px;
-  left: 1rem;
-  height: 2px;
-  background: var(--accent);
-  content: "";
-  opacity: 0;
-  transform: scaleX(0.4);
-  transition: opacity 180ms ease, transform 180ms ease;
-}
-
-.chapterDesktopLinks a:hover,
-.chapterDesktopLinks a:focus-visible,
-.chapterDesktopLinks .chapterActive {
-  color: var(--ink);
-  outline: none;
-}
-
-.chapterDesktopLinks .chapterActive::after {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-.chapterDesktopLinks span {
+.chapterStatus span {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 
-.chapterMobile {
-  display: none;
+.chapterTrack {
+  height: 2px;
+  margin-inline: -1.5rem;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--line) 70%, transparent);
+}
+
+.chapterTrackFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contents,
@@ -772,86 +748,11 @@
   }
 
   .chapterNav {
-    grid-template-columns: 1fr auto;
-    min-height: 3.25rem;
     padding-inline: 1.25rem;
   }
 
-  .chapterDesktopLinks {
-    display: none;
-  }
-
-  .chapterMobile {
-    position: relative;
-    display: block;
-  }
-
-  .chapterMobile > button {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    color: var(--ink);
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  .chapterMobile > button span {
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .chapterMobileList {
-    position: absolute;
-    top: calc(100% + 1rem);
-    right: -1.25rem;
-    display: grid;
-    width: min(20rem, calc(100vw - 2.5rem));
-    padding: 0.75rem 1.25rem 1rem;
-    border: 1px solid var(--line);
-    background: var(--paper-raised);
-    box-shadow: 0 1.5rem 3rem rgb(18 21 18 / 12%);
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-0.5rem);
-    visibility: hidden;
-    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
-  }
-
-  .chapterMobileListOpen {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-    visibility: visible;
-  }
-
-  .chapterMobileList a {
-    display: grid;
-    grid-template-columns: 2.25rem 1fr;
-    gap: 0.5rem;
-    padding-block: 0.8rem;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--display);
-    font-size: 1.6rem;
-    line-height: 1;
-  }
-
-  .chapterMobileList a:last-child {
-    border-bottom: 0;
-  }
-
-  .chapterMobileList a[aria-current="location"] {
-    font-style: italic;
-  }
-
-  .chapterMobileList a span {
-    padding-top: 0.25rem;
-    color: var(--muted);
-    font-family: var(--body);
-    font-size: 0.55rem;
-    font-style: normal;
-    letter-spacing: 0.12em;
+  .chapterTrack {
+    margin-inline: -1.25rem;
   }
 
   .contentItem a {
@@ -910,9 +811,7 @@
   .textLink,
   .contentItem a,
   .contentArrow,
-  .chapterDesktopLinks a,
-  .chapterDesktopLinks a::after,
-  .chapterMobileList {
+  .chapterTrackFill {
     transition: none;
   }
 }
