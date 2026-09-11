@@ -4,6 +4,24 @@ import Link from "next/link";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
+const chapters = [
+  {
+    number: "01",
+    title: "A personal beginning",
+    copy: "An instinct for colour, cloth, and pieces made for the person wearing them.",
+  },
+  {
+    number: "02",
+    title: "The deliberate pause",
+    copy: "Time to refine the identity, understand the work, and choose a more purposeful direction.",
+  },
+  {
+    number: "03",
+    title: "The pivotal loop",
+    copy: "A return with a wider horizon across apparel, artisanal craft, and design innovation.",
+  },
+] as const;
+
 export const metadata: Metadata = {
   title: "About",
   description: "Monereen is an artisanal fashion label devoted to personal expression, heritage, and thoughtful craft.",
@@ -25,6 +43,29 @@ export default function AboutPage() {
                 Monereen is an artisanal fashion label founded on passion and devoted to bespoke creation. Each piece is shaped through thoughtful design, rigorous attention to detail, and an enduring respect for the craft.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="journey-title" className="border-y border-[#d8d1c4] bg-[#eee8dd] px-5 py-20 sm:px-8 md:py-28">
+          <div className="mx-auto max-w-[92rem]">
+            <div className="grid gap-8 md:grid-cols-[0.7fr_1.5fr] md:gap-20">
+              <p className="text-[10px] uppercase tracking-[0.2em]">Three movements</p>
+              <h2 id="journey-title" className="max-w-4xl font-heading text-5xl leading-none tracking-[-0.04em] md:text-7xl">
+                The path was never a straight line.
+              </h2>
+            </div>
+
+            <ol className="mt-16 grid border-t border-[#aaa092] md:mt-24 md:grid-cols-3">
+              {chapters.map((chapter) => (
+                <li key={chapter.number} className="grid min-h-72 content-between gap-16 border-b border-[#aaa092] py-7 md:min-h-96 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0">
+                  <span className="text-[10px] tabular-nums tracking-[0.18em] text-[#6e655a]">{chapter.number}</span>
+                  <div>
+                    <h3 className="max-w-xs font-heading text-4xl leading-none tracking-[-0.035em]">{chapter.title}</h3>
+                    <p className="mt-6 max-w-sm text-sm leading-7 text-[#5f594f]">{chapter.copy}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 

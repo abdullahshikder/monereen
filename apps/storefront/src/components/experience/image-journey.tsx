@@ -172,14 +172,16 @@ export function ImageJourney() {
 
   return (
     <motion.section
+      id="image-journey"
       ref={journeyRef}
+      aria-label="Monereen visual journey"
       animate={{ backgroundColor: activeImage.color }}
       transition={{ duration: reduceMotion ? 0.01 : 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex min-h-[100svh] flex-col overflow-hidden text-white"
+      className="relative flex min-h-[calc(100svh-4rem)] scroll-mt-16 flex-col overflow-hidden text-white"
       onPointerMove={handlePointerMove}
       onPointerLeave={resetPointer}
     >
-      <div className="relative flex min-h-[100svh] flex-1 items-center justify-center overflow-hidden">
+      <div className="relative flex min-h-[calc(100svh-4rem)] flex-1 items-center justify-center overflow-hidden">
         <AnimatePresence initial={false}>
           <motion.div
             key={`ambient-${activeImage.src}`}
@@ -299,25 +301,25 @@ export function ImageJourney() {
             <motion.div className="h-px origin-left bg-white" animate={{ scaleX: (activeIndex + 1) / allBrandImages.length }} transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }} />
           </div>
           <div className="flex flex-wrap items-end justify-between gap-5">
-            <div className="flex flex-wrap gap-5">
+            <div className="flex w-full flex-wrap gap-5 sm:w-auto">
               {categories.map((category) => (
                 <button key={category} type="button" onClick={() => jumpToCategory(category)} className={`text-[9px] uppercase tracking-[0.2em] transition-opacity ${activeImage.category === category ? "opacity-100" : "opacity-40 hover:opacity-100"}`}>
                   {category}
                 </button>
               ))}
             </div>
-            <div className="flex items-center gap-5">
-              <p aria-live="polite" className="text-[10px] tabular-nums tracking-[0.2em]">{String(activeIndex + 1).padStart(2, "0")} / {allBrandImages.length}</p>
-              <button type="button" onClick={() => setImageFit((fit) => fit === "contain" ? "cover" : "contain")} className="text-[9px] uppercase tracking-[0.2em] opacity-60 transition-opacity hover:opacity-100">
+            <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start sm:gap-5">
+              <p aria-live="polite" className="whitespace-nowrap text-[10px] tabular-nums tracking-[0.2em]">{String(activeIndex + 1).padStart(2, "0")} / {allBrandImages.length}</p>
+              <button type="button" onClick={() => setImageFit((fit) => fit === "contain" ? "cover" : "contain")} className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] opacity-60 transition-opacity hover:opacity-100">
                 {imageFit === "contain" ? "Fill screen" : "Full frame"}
               </button>
-              <button type="button" onClick={() => setIsCinemaMode(true)} aria-label="Enter cinema mode" className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100">
+              <button type="button" onClick={() => setIsCinemaMode(true)} aria-label="Enter cinema mode" className="flex items-center gap-2 whitespace-nowrap text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100">
                 <Eye size={15} aria-hidden="true" /> Cinema
               </button>
-              <button type="button" onClick={() => setIsPlaying((playing) => !playing)} aria-label={isPlaying ? "Pause autoplay" : "Start autoplay"} className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100">
+              <button type="button" onClick={() => setIsPlaying((playing) => !playing)} aria-label={isPlaying ? "Pause autoplay" : "Start autoplay"} className="flex items-center gap-2 whitespace-nowrap text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100">
                 {isPlaying ? <Pause size={14} aria-hidden="true" /> : <Play size={14} aria-hidden="true" />} {isPlaying ? "Pause" : "Play"}
               </button>
-              <button type="button" onClick={() => void toggleFullscreen()} aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"} className="flex items-center gap-2 text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100">
+              <button type="button" onClick={() => void toggleFullscreen()} aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"} className="hidden items-center gap-2 whitespace-nowrap text-[9px] uppercase tracking-[0.2em] opacity-70 transition-opacity hover:opacity-100 sm:flex">
                 <ArrowsOut size={15} aria-hidden="true" /> {isFullscreen ? "Exit" : "Fullscreen"}
               </button>
             </div>

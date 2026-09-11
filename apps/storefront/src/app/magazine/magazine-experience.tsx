@@ -8,7 +8,13 @@ import {
   MagazineProgress,
   Reveal,
 } from "./magazine-motion";
+import { MagazineChapterNav } from "./magazine-chapter-nav";
 import styles from "./page.module.css";
+
+const yellowBlur =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Cpath fill='%23c9ca31' d='M0 0h16v10H0z'/%3E%3C/svg%3E";
+const violetBlur =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='16'%3E%3Cpath fill='%235961ad' d='M0 0h10v16H0z'/%3E%3C/svg%3E";
 
 const contents = [
   {
@@ -80,24 +86,6 @@ const selectedFrames = [
     height: 1600,
     alt: "Pink Monereen print with intricate surface detail",
   },
-  {
-    src: "/brand/gallery/solids-2939.jpg",
-    width: 1600,
-    height: 1060,
-    alt: "Dark Monereen garment with considered embellishment",
-  },
-  {
-    src: "/brand/gallery/prints-img-20240610-wa0018.jpg",
-    width: 1200,
-    height: 1600,
-    alt: "Deep red Monereen printed garment",
-  },
-  {
-    src: "/brand/gallery/solids-dsc-3847-01.jpg",
-    width: 1600,
-    height: 1060,
-    alt: "Blue Monereen garment photographed in a garden",
-  },
 ] as const;
 
 export function MagazineExperience() {
@@ -135,6 +123,8 @@ export function MagazineExperience() {
               alt="Woman wearing a violet floral Monereen kaftan against yellow cloth"
               fill
               priority
+              placeholder="blur"
+              blurDataURL={yellowBlur}
               sizes="(max-width: 767px) 100vw, 66vw"
               className={styles.coverImage}
             />
@@ -143,6 +133,8 @@ export function MagazineExperience() {
             </p>
           </MagazineHeroMedia>
         </section>
+
+        <MagazineChapterNav />
 
         <section id="contents" className={styles.contents}>
           <Reveal className={styles.sectionLead}>
@@ -208,6 +200,8 @@ export function MagazineExperience() {
               src="/brand/gallery/prints-dsc04240.jpg"
               alt="Violet floral Monereen garment against yellow cloth"
               fill
+              placeholder="blur"
+              blurDataURL={violetBlur}
               sizes="100vw"
               className={styles.colourImage}
             />
@@ -265,7 +259,7 @@ export function MagazineExperience() {
         <section id="working-edit" className={styles.workingEdit}>
           <Reveal className={styles.editLead}>
             <p className={styles.topic}>The working edit</p>
-            <h2>Six frames from an evolving archive.</h2>
+            <h2>Three frames from an evolving archive.</h2>
             <Link href="/archive#image-index" className={styles.textLink}>
               View all 39 images <ArrowUpRight size={16} weight="light" aria-hidden="true" />
             </Link>

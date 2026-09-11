@@ -179,6 +179,83 @@
   backdrop-filter: blur(10px);
 }
 
+.chapterNav {
+  position: sticky;
+  z-index: 40;
+  top: 4rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: 0 1.5rem;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper-raised) 94%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.chapterIssue {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.chapterDesktopLinks {
+  display: flex;
+  align-self: stretch;
+  align-items: stretch;
+}
+
+.chapterDesktopLinks a {
+  position: relative;
+  display: flex;
+  min-width: 9rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding-inline: 1rem;
+  color: var(--muted);
+  font-size: 0.61rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.chapterDesktopLinks a::after {
+  position: absolute;
+  right: 1rem;
+  bottom: -1px;
+  left: 1rem;
+  height: 2px;
+  background: var(--accent);
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.chapterDesktopLinks a:hover,
+.chapterDesktopLinks a:focus-visible,
+.chapterDesktopLinks .chapterActive {
+  color: var(--ink);
+  outline: none;
+}
+
+.chapterDesktopLinks .chapterActive::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.chapterDesktopLinks span {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.chapterMobile {
+  display: none;
+}
+
 .contents,
 .opener,
 .materials,
@@ -186,7 +263,15 @@
 .endPaper {
   width: min(100%, 96rem);
   margin-inline: auto;
-  padding: clamp(5rem, 10vw, 10rem) clamp(1.25rem, 4vw, 4rem);
+  padding: clamp(4.5rem, 8vw, 8.5rem) clamp(1.25rem, 4vw, 4rem);
+}
+
+.contents,
+.opener,
+.colourStory,
+.materials,
+.workingEdit {
+  scroll-margin-top: 7.5rem;
 }
 
 .sectionLead {
@@ -352,7 +437,7 @@
 .colourStory {
   position: relative;
   display: grid;
-  min-height: 110dvh;
+  min-height: 100dvh;
   place-items: end start;
   overflow: hidden;
 }
@@ -433,7 +518,7 @@
 }
 
 .horizon {
-  margin-top: clamp(6rem, 12vw, 13rem);
+  margin-top: clamp(5rem, 9vw, 10rem);
   padding: clamp(2rem, 5vw, 5rem);
   color: var(--accent-ink);
   background: var(--accent);
@@ -661,11 +746,112 @@
 
 @media (max-width: 767px) {
   .coverCopy {
-    min-height: 42rem;
+    min-height: clamp(28rem, 62dvh, 33rem);
+    padding: 1.5rem;
+  }
+
+  .coverTitle {
+    padding-block: clamp(3rem, 9dvh, 4.75rem);
+  }
+
+  .coverTitle h1 {
+    font-size: clamp(3.6rem, 17vw, 5rem);
+  }
+
+  .coverDeck {
+    margin-top: 1.4rem;
+    line-height: 1.6;
   }
 
   .coverMedia {
-    min-height: 78dvh;
+    min-height: max(18rem, 38dvh);
+  }
+
+  .coverImageLine {
+    display: none;
+  }
+
+  .chapterNav {
+    grid-template-columns: 1fr auto;
+    min-height: 3.25rem;
+    padding-inline: 1.25rem;
+  }
+
+  .chapterDesktopLinks {
+    display: none;
+  }
+
+  .chapterMobile {
+    position: relative;
+    display: block;
+  }
+
+  .chapterMobile > button {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--ink);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .chapterMobile > button span {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chapterMobileList {
+    position: absolute;
+    top: calc(100% + 1rem);
+    right: -1.25rem;
+    display: grid;
+    width: min(20rem, calc(100vw - 2.5rem));
+    padding: 0.75rem 1.25rem 1rem;
+    border: 1px solid var(--line);
+    background: var(--paper-raised);
+    box-shadow: 0 1.5rem 3rem rgb(18 21 18 / 12%);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.5rem);
+    visibility: hidden;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+  }
+
+  .chapterMobileListOpen {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .chapterMobileList a {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    gap: 0.5rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--display);
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .chapterMobileList a:last-child {
+    border-bottom: 0;
+  }
+
+  .chapterMobileList a[aria-current="location"] {
+    font-style: italic;
+  }
+
+  .chapterMobileList a span {
+    padding-top: 0.25rem;
+    color: var(--muted);
+    font-family: var(--body);
+    font-size: 0.55rem;
+    font-style: normal;
+    letter-spacing: 0.12em;
   }
 
   .contentItem a {
@@ -679,7 +865,7 @@
   }
 
   .colourStory {
-    min-height: 92dvh;
+    min-height: 84dvh;
   }
 
   .materialFigure:nth-child(2) {
@@ -723,7 +909,10 @@
 
   .textLink,
   .contentItem a,
-  .contentArrow {
+  .contentArrow,
+  .chapterDesktopLinks a,
+  .chapterDesktopLinks a::after,
+  .chapterMobileList {
     transition: none;
   }
 }

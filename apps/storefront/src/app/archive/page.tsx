@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ImageJourney } from "@/components/experience/image-journey";
 import { completeImageArchive } from "@/lib/brand-gallery";
 
 export const metadata: Metadata = {
@@ -18,44 +19,47 @@ const collectionIndex = [
   { id: "bridal", number: "04", name: "Bridal", note: "Ceremonial forms", href: "/collections/bridal" },
 ] as const;
 
-function ArchiveImage({
-  src,
-  alt,
-  sizes,
-  position = "center",
-}: {
-  src: string;
-  alt: string;
-  sizes: string;
-  position?: string;
-}) {
-  return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      sizes={sizes}
-      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
-      style={{ objectPosition: position }}
-    />
-  );
-}
-
 export default function ArchivePage() {
   return (
     <>
       <Header />
       <main className="bg-[#f6f2ea] pt-16 text-[#211f1b]">
         <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden bg-charcoal text-white">
-          <Image
-            src="/brand/archive/prints-hero.jpg"
-            alt="Monereen printed kaftan photographed against a vivid yellow textile backdrop"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 grid grid-cols-[1.25fr_0.75fr] gap-1 bg-[#171714] md:grid-cols-[1.4fr_0.6fr]">
+            <div className="relative overflow-hidden">
+              <Image
+                src="/brand/archive/kaftans-group.jpg"
+                alt="Three women wearing colourful Monereen kaftans"
+                fill
+                priority
+                sizes="(max-width: 767px) 68vw, 72vw"
+                className="object-cover object-[52%_top]"
+              />
+            </div>
+            <div className="grid grid-rows-2 gap-1">
+              <div className="relative overflow-hidden">
+                <Image
+                  src="/brand/archive/prints-detail.jpg"
+                  alt="Close detail of layered Monereen prints"
+                  fill
+                  priority
+                  sizes="(max-width: 767px) 32vw, 28vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative overflow-hidden">
+                <Image
+                  src="/brand/archive/solids-blue.jpg"
+                  alt="Blue embroidered Monereen garment photographed on grass"
+                  fill
+                  priority
+                  sizes="(max-width: 767px) 32vw, 28vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,8,6,0.66),rgba(8,8,6,0.08)_75%),linear-gradient(0deg,rgba(8,8,6,0.42),transparent_55%)]" />
           <div className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-between px-5 py-7 sm:px-8 md:p-12">
             <div className="flex items-start justify-between gap-6 text-[10px] uppercase tracking-[0.2em]">
               <p>Monereen archive</p>
@@ -71,8 +75,8 @@ export default function ArchivePage() {
                   <p className="max-w-md text-sm leading-relaxed text-white/85 md:text-base">
                     An evolving record of cloth, colour, form, and the hands that bring each Monereen piece into being.
                   </p>
-                  <Link href="#image-index" className="mt-6 inline-flex items-center gap-3 border-b border-white/70 pb-2 text-[10px] uppercase tracking-[0.2em]">
-                    View all 39 photographs <ArrowDown size={14} aria-hidden="true" />
+                  <Link href="#visual-journey" className="mt-6 inline-flex items-center gap-3 border-b border-white/70 pb-2 text-[10px] uppercase tracking-[0.2em]">
+                    Enter visual journey <ArrowDown size={14} aria-hidden="true" />
                   </Link>
                   <Link href="/magazine" className="ml-6 mt-6 inline-flex items-center gap-3 border-b border-white/70 pb-2 text-[10px] uppercase tracking-[0.2em]">
                     Read magazine edition <ArrowUpRight size={14} aria-hidden="true" />
@@ -102,70 +106,21 @@ export default function ArchivePage() {
           </div>
         </section>
 
-        <section aria-labelledby="studies-title" className="border-y border-[#d8d1c4] bg-[#e7ded2] px-5 py-20 sm:px-8 md:py-28">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="mb-16 flex items-end justify-between gap-8 border-b border-[#aaa092] pb-6">
-              <div>
-                <p className="mb-3 text-[10px] uppercase tracking-[0.2em]">Selected studies · 2022—2026</p>
-                <h2 id="studies-title" className="font-heading text-5xl tracking-[-0.04em] md:text-7xl">The early archive</h2>
-              </div>
-              <p className="hidden max-w-xs text-right text-xs leading-5 text-[#6b6258] md:block">
-                Existing Monereen photography, arranged as an editorial working record.
+        <section id="visual-journey" aria-labelledby="visual-journey-title" className="scroll-mt-16 border-t border-[#d8d1c4] bg-[#e7ded2] px-5 py-20 sm:px-8 md:py-28">
+          <div className="mx-auto grid max-w-[92rem] gap-10 border-t border-[#aaa092] pt-7 md:grid-cols-[0.7fr_1.5fr] md:gap-20">
+            <p className="text-[10px] uppercase tracking-[0.2em]">Immersive archive · 39 frames</p>
+            <div>
+              <h2 id="visual-journey-title" className="max-w-4xl font-heading text-5xl leading-none tracking-[-0.04em] md:text-7xl">
+                Enter the visual sequence.
+              </h2>
+              <p className="mt-8 max-w-2xl text-sm leading-7 text-[#5f594f] md:text-base">
+                Move through every frame as one continuous study of colour, cloth, and form. Swipe, drag, use the arrow keys, or let the sequence play.
               </p>
             </div>
-
-            <article className="grid gap-5 md:grid-cols-12 md:gap-7">
-              <div className="group relative aspect-[4/5] overflow-hidden md:col-span-5 md:aspect-[3/4]">
-                <ArchiveImage src="/brand/archive/kaftans-group.jpg" alt="Three women wearing colourful Monereen kaftans" sizes="(max-width: 767px) 100vw, 42vw" position="center top" />
-              </div>
-              <div className="flex flex-col justify-between border-t border-[#aaa092] py-5 md:col-span-3 md:ml-5 md:py-7">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em]">Study 001</p>
-                  <h3 className="mt-4 font-heading text-4xl leading-none tracking-[-0.03em]">Kaftans</h3>
-                </div>
-                <p className="mt-16 text-sm leading-6 text-[#5f594f]">
-                  Ease, movement, and expressive surface. A recurring silhouette interpreted through print, tie-dye, silk, and jute cotton.
-                </p>
-              </div>
-              <div className="group relative aspect-[4/5] overflow-hidden md:col-span-4 md:mt-32 md:aspect-[3/4]">
-                <ArchiveImage src="/brand/archive/kaftans-tie-dye.jpg" alt="Blue tie-dye Monereen kaftan against yellow textile" sizes="(max-width: 767px) 100vw, 34vw" position="center top" />
-              </div>
-            </article>
-
-            <article className="mt-28 grid gap-5 md:mt-44 md:grid-cols-12 md:gap-7">
-              <div className="group relative aspect-[4/3] overflow-hidden md:col-span-7 md:aspect-[7/5]">
-                <ArchiveImage src="/brand/archive/prints-detail.jpg" alt="Close detail of a deep red sleeve and layered printed textiles" sizes="(max-width: 767px) 100vw, 58vw" />
-              </div>
-              <div className="flex flex-col justify-between border-t border-[#aaa092] py-5 md:col-span-5 md:ml-10 md:py-7">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em]">Study 002</p>
-                  <h3 className="mt-4 max-w-sm font-heading text-4xl leading-none tracking-[-0.03em] md:text-5xl">Print as memory</h3>
-                </div>
-                <p className="mt-16 max-w-md text-sm leading-6 text-[#5f594f]">
-                  Motifs accumulate like fragments of a journey—botanical marks, repeated gestures, and colour held in conversation.
-                </p>
-              </div>
-            </article>
-
-            <article className="mt-28 grid gap-5 md:mt-44 md:grid-cols-12 md:gap-7">
-              <div className="flex flex-col justify-between border-t border-[#aaa092] py-5 md:col-span-3 md:py-7">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[0.2em]">Study 003</p>
-                  <h3 className="mt-4 font-heading text-4xl leading-none tracking-[-0.03em]">Quiet form</h3>
-                </div>
-                <p className="mt-16 text-sm leading-6 text-[#5f594f]">
-                  Solid cloth brings construction forward: line, proportion, embroidery, and the intimacy of finishing by hand.
-                </p>
-              </div>
-              <div className="group relative aspect-[4/5] overflow-hidden md:col-span-4 md:aspect-[3/4]">
-                <ArchiveImage src="/brand/archive/solids-portrait.jpg" alt="Portrait in an ivory Monereen garment with embellished details" sizes="(max-width: 767px) 100vw, 34vw" position="center top" />
-              </div>
-              <div className="group relative aspect-[4/3] overflow-hidden md:col-span-5 md:mt-36 md:aspect-[5/4]">
-                <ArchiveImage src="/brand/archive/solids-blue.jpg" alt="Blue embroidered Monereen garment photographed on grass" sizes="(max-width: 767px) 100vw, 42vw" />
-              </div>
-            </article>
           </div>
         </section>
+
+        <ImageJourney />
 
         <section id="image-index" aria-labelledby="image-index-title" className="border-b border-[#d8d1c4] px-5 py-24 sm:px-8 md:py-36">
           <div className="mx-auto max-w-[92rem]">
