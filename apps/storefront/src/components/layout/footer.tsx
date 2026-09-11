@@ -32,9 +32,27 @@ export function Footer() {
             <h2 className="mb-5 text-[10px] uppercase tracking-[0.2em] text-[#6e655a]">Contact</h2>
             <ul className="space-y-3 font-heading text-xl">
               <li><Link href="/pages/contact" className="footer-link">Contact us</Link></li>
-              <li><span>Facebook</span></li>
+              <li>
+                <Link
+                  href="https://www.facebook.com/Monereenbd/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer-link"
+                >
+                  Facebook
+                </Link>
+              </li>
               <li><span>WhatsApp</span></li>
-              <li><span>Instagram</span></li>
+              <li>
+                <Link
+                  href="https://www.instagram.com/monereenbd/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="footer-link"
+                >
+                  Instagram
+                </Link>
+              </li>
               <li><span>LinkedIn</span></li>
             </ul>
           </div>
