@@ -15,8 +15,6 @@ type ChapterId = (typeof chapters)[number]["id"];
 export function MagazineChapterNav() {
   const [activeId, setActiveId] = useState<ChapterId>(chapters[0].id);
   const activeChapter = chapters.find((chapter) => chapter.id === activeId) ?? chapters[0];
-  const activeIndex = chapters.findIndex((chapter) => chapter.id === activeId);
-  const progress = ((activeIndex + 1) / chapters.length) * 100;
 
   useEffect(() => {
     const sections = chapters
@@ -46,16 +44,6 @@ export function MagazineChapterNav() {
           <span>{activeChapter.number} / 04</span>
           {activeChapter.title}
         </p>
-      </div>
-      <div
-        className={styles.chapterTrack}
-        role="progressbar"
-        aria-label="Magazine chapter progress"
-        aria-valuemin={1}
-        aria-valuemax={chapters.length}
-        aria-valuenow={activeIndex + 1}
-      >
-        <span className={styles.chapterTrackFill} style={{ width: `${progress}%` }} />
       </div>
     </aside>
   );

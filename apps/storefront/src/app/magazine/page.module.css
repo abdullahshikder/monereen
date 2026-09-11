@@ -183,7 +183,7 @@
   position: sticky;
   z-index: 40;
   top: 4rem;
-  padding: 0.75rem 1.5rem 0;
+  padding: 0.75rem 1.5rem;
   border-block: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper-raised) 94%, transparent);
   backdrop-filter: blur(14px);
@@ -193,7 +193,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 0.7rem;
 }
 
 .chapterIssue {
@@ -216,20 +215,6 @@
 .chapterStatus span {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
-}
-
-.chapterTrack {
-  height: 2px;
-  margin-inline: -1.5rem;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--line) 70%, transparent);
-}
-
-.chapterTrackFill {
-  display: block;
-  height: 100%;
-  background: var(--accent);
-  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contents,
@@ -751,10 +736,6 @@
     padding-inline: 1.25rem;
   }
 
-  .chapterTrack {
-    margin-inline: -1.25rem;
-  }
-
   .contentItem a {
     grid-template-columns: 2.75rem 1fr auto;
     gap: 1rem;
@@ -810,8 +791,7 @@
 
   .textLink,
   .contentItem a,
-  .contentArrow,
-  .chapterTrackFill {
+  .contentArrow {
     transition: none;
   }
 }
