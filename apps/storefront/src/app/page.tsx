@@ -1,42 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import styles from "./page.module.css";
+import { MagazineExperience } from "./magazine/magazine-experience";
 
 export const metadata: Metadata = {
-  title: "Monereen — Coming Soon",
-  description: "Monereen is preparing its next chapter.",
+  title: "Monereen | The Pivotal Loop",
+  description:
+    "Enter Monereen through The Pivotal Loop, a study of cloth, colour, personal expression, and a house taking shape.",
 };
 
 export default function Home() {
-  return (
-    <main className={styles.page}>
-      <div className={styles.atmosphere} aria-hidden="true" />
-      <Image
-        src="/brand/gallery/prints-33543.jpg"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className={styles.textile}
-        aria-hidden="true"
-      />
-      <div className={styles.grain} aria-hidden="true" />
-
-      <section className={styles.intro} aria-label="Monereen coming soon">
-        <div className={styles.logoReveal}>
-          <Image
-            src="/brand/monereen-logo.png"
-            alt="Monereen"
-            width={1440}
-            height={528}
-            priority
-            sizes="(max-width: 640px) 78vw, 680px"
-            className={styles.logo}
-          />
-        </div>
-
-        <p className={styles.comingSoon}>Coming soon</p>
-      </section>
-    </main>
-  );
+  return <MagazineExperience />;
 }
