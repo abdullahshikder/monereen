@@ -1,45 +1,135 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { List } from "@phosphor-icons/react/dist/ssr";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight, List, X } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import styles from "./header.module.css";
 
 const navigation = [
-  ["Experience", "/#experience"],
-  ["Manifesto", "/#manifesto"],
-  ["Magazine", "/magazine"],
-  ["Image archive", "/archive#image-index"],
-  ["About", "/about"],
+  { label: "Magazine", href: "/" },
+  { label: "Archive", href: "/archive#image-index" },
+  { label: "About", href: "/about" },
 ] as const;
 
+function isCurrentPage(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/" || pathname === "/magazine";
+  }
+
+  return pathname.startsWith(href.split("#")[0]);
+}
+
 export function Header() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[#d8d1c4] bg-[#f6f2ea]/92 backdrop-blur-md">
-      <nav aria-label="Primary navigation" className="mx-auto grid h-16 max-w-[96rem] grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6">
-        <Link href="/" aria-label="Monereen home" className="w-fit">
-          <Image src="/brand/monereen-logo.png" alt="Monereen" width={139} height={52} priority className="h-8 w-auto object-contain" />
+    <header className={styles.header}>
+      <nav aria-label="Primary navigation" className={styles.bar}>
+        <Link href="/" aria-label="Monereen home" className={styles.logo} onClick={() => setMenuOpen(false)}>
+          <Image
+            src="/brand/monereen-logo.png"
+            alt="Monereen"
+            width={139}
+            height={52}
+            priority
+          />
         </Link>
 
-        <div className="hidden items-center gap-7 lg:flex">
-          {navigation.map(([label, href]) => (
-            <Link key={label} href={href} className="site-nav-link whitespace-nowrap">{label}</Link>
-          ))}
+        <div className={styles.desktopNavigation}>
+          {navigation.map(({ label, href }) => {
+            const current = isCurrentPage(pathname, href);
+
+            return (
+              <Link
+                key={label}
+                href={href}
+                aria-current={current ? "page" : undefined}
+                className={`site-nav-link ${styles.navigationLink} ${current ? styles.current : ""}`}
+              >
+                {label}
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="flex items-center justify-end">
-          <p className="hidden text-[9px] uppercase tracking-[0.2em] text-[#6e655a] lg:block">An evolving house · Dhaka</p>
-          <details className="relative lg:hidden">
-            <summary className="site-icon-button cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-              <List size={21} aria-hidden="true" />
-              <span className="sr-only">Open menu</span>
-            </summary>
-            <div className="absolute right-0 top-[calc(100%+0.75rem)] w-[min(22rem,calc(100vw-2rem))] border border-[#d8d1c4] bg-[#f6f2ea] p-6 shadow-[0_18px_45px_rgba(32,29,24,0.12)]">
-              <ul className="space-y-4 font-heading text-2xl">
-                {navigation.map(([label, href]) => <li key={label}><Link href={href}>{label}</Link></li>)}
-              </ul>
-              <p className="mt-6 border-t border-[#d8d1c4] pt-5 text-[10px] uppercase tracking-[0.18em] text-[#6e655a]">Cloth · Craft · Cultural memory</p>
-            </div>
-          </details>
+        <div className={styles.actions}>
+          <a
+            href="https://www.instagram.com/monereenbd/"
+            target="_blank"
+            rel="noreferrer"
+            className={styles.instagram}
+          >
+            Instagram
+            <ArrowUpRight size={13} weight="light" aria-hidden="true" />
+          </a>
+
+          <button
+            type="button"
+            className={`site-icon-button ${styles.menuButton}`}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span>{menuOpen ? "Close" : "Menu"}</span>
+            {menuOpen ? <X size={19} aria-hidden="true" /> : <List size={19} aria-hidden="true" />}
+          </button>
         </div>
       </nav>
+
+      <div
+        id="mobile-navigation"
+        className={`${styles.mobileNavigation} ${menuOpen ? styles.mobileNavigationOpen : ""}`}
+        aria-hidden={!menuOpen}
+      >
+        <p className={styles.mobileEyebrow}>Explore Monereen</p>
+        <ul>
+          {navigation.map(({ label, href }, index) => {
+            const current = isCurrentPage(pathname, href);
+
+            return (
+              <li key={label}>
+                <span>0{index + 1}</span>
+                <Link
+                  href={href}
+                  aria-current={current ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        <a
+          href="https://www.instagram.com/monereenbd/"
+          target="_blank"
+          rel="noreferrer"
+          className={styles.mobileInstagram}
+        >
+          Follow on Instagram
+          <ArrowUpRight size={16} weight="light" aria-hidden="true" />
+        </a>
+      </div>
     </header>
   );
 }
