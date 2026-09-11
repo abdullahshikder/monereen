@@ -7,9 +7,10 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
+  applicationName: "Monereen",
   title: {
-    default: "Monereen — Products Inside Stories",
-    template: "%s | Monereen",
+    default: "Monereen",
+    template: "%s — Monereen",
   },
   description:
     "A digital exhibition, archive, portfolio, and store where products exist inside stories.",
@@ -17,6 +18,10 @@ export const metadata: Metadata = {
     title: "Monereen",
     description: "Products inside stories",
     type: "website",
+  },
+  icons: {
+    icon: [{ url: "/brand/monereen-loader.png", type: "image/png" }],
+    apple: "/brand/monereen-loader.png",
   },
 };
 
