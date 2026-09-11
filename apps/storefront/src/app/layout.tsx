@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { SiteLoader } from "@/components/layout/site-loader";
 import "./globals.css";
 
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair", display: "swap" });
@@ -26,7 +27,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${inter.variable}`}>{children}</body>
+      <body className={`${playfair.variable} ${inter.variable}`}>
+        <SiteLoader />
+        {children}
+      </body>
     </html>
   );
 }

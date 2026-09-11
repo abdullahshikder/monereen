@@ -30,7 +30,13 @@ export default function AboutPage() {
 
         <section className="grid md:grid-cols-2">
           <div className="relative min-h-[65svh]">
-            <Image src="/brand/archive/prints-floral.jpg" alt="Monereen floral garment in warm afternoon light" fill sizes="(max-width: 767px) 100vw, 50vw" className="object-cover object-top" />
+            <Image
+              src="/brand/gallery/kaftans-copy-of-dsc04739-04.jpg"
+              alt="Three women wearing expressive Monereen kaftans against pink cloth"
+              fill
+              sizes="(max-width: 767px) 100vw, 50vw"
+              className="object-cover object-[center_35%]"
+            />
           </div>
           <div className="flex items-center bg-[#e7ded2] px-6 py-20 sm:px-10 md:px-16 lg:px-24">
             <div className="max-w-xl">

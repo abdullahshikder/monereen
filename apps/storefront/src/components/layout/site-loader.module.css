@@ -1,0 +1,89 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #020202;
+  color: #f4f1ea;
+  opacity: 1;
+  transition: opacity 550ms cubic-bezier(0.65, 0, 0.35, 1),
+    visibility 550ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.loader::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgb(255 255 255 / 5%), transparent 46%);
+  content: "";
+}
+
+.leaving {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.identity {
+  position: relative;
+  display: flex;
+  width: min(44vw, 11rem);
+  flex-direction: column;
+  align-items: center;
+}
+
+.mark {
+  width: 100%;
+  height: auto;
+  animation: loader-spin 4.8s linear infinite;
+  filter: invert(1);
+  opacity: 0.88;
+}
+
+.identity p {
+  margin-top: 1.25rem;
+  margin-left: 0.38em;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+}
+
+.rule {
+  position: relative;
+  width: 4rem;
+  height: 1px;
+  margin-top: 1rem;
+  overflow: hidden;
+  background: rgb(244 241 234 / 18%);
+}
+
+.rule::after {
+  position: absolute;
+  inset: 0;
+  background: #f4f1ea;
+  content: "";
+  transform: translateX(-100%);
+  animation: loader-rule 1.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader-rule {
+  50%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mark,
+  .rule::after {
+    animation: none;
+  }
+}
