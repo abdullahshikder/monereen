@@ -1,177 +1,315 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowLeft, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { allBrandImages } from "@/lib/brand-gallery";
+import {
+  MagazineHeroMedia,
+  MagazineProgress,
+  Reveal,
+} from "./magazine-motion";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Magazine — Issue 01",
-  description: "Monereen Magazine Issue 01: The Pivotal Loop, an editorial study of cloth, colour, form, and cultural memory.",
+  title: "Monereen Magazine | Issue 01",
+  description:
+    "The Pivotal Loop, Monereen Magazine Issue 01. A study of cloth, colour, personal expression, and the house taking shape.",
 };
 
 const contents = [
-  ["08", "The Pivotal Loop", "A house takes shape"],
-  ["18", "A Language of Cloth", "Print, solid, and surface"],
-  ["32", "Four Horizons", "The collections ahead"],
-  ["44", "Working Index", "Thirty-nine archive frames"],
+  {
+    page: "08",
+    title: "The Pivotal Loop",
+    note: "A personal passion becomes a house with a longer view.",
+    href: "#pivotal-loop",
+  },
+  {
+    page: "18",
+    title: "Colour Has Memory",
+    note: "Print, repetition, and the emotional force of a surface.",
+    href: "#colour-memory",
+  },
+  {
+    page: "32",
+    title: "A Language of Cloth",
+    note: "Construction and detail reveal the hand behind the work.",
+    href: "#language-of-cloth",
+  },
+  {
+    page: "44",
+    title: "The Working Edit",
+    note: "Selected frames from the evolving Monereen archive.",
+    href: "#working-edit",
+  },
+] as const;
+
+const materialStudies = [
+  {
+    src: "/brand/gallery/prints-33543.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "Red embroidered sleeve resting over layered Monereen prints",
+    caption: "Layered print and hand-finished edge",
+  },
+  {
+    src: "/brand/gallery/prints-33266.jpg",
+    width: 1600,
+    height: 1600,
+    alt: "Deep blue Monereen textile with ornate embroidery",
+    caption: "Ornament held against a deep blue ground",
+  },
+  {
+    src: "/brand/gallery/solids-12674.jpg",
+    width: 1059,
+    height: 1600,
+    alt: "Monereen solid garment showing line and construction",
+    caption: "A quieter cloth reveals proportion",
+  },
+] as const;
+
+const selectedFrames = [
+  {
+    src: "/brand/gallery/kaftans-jute-cotton-kaftan.jpg",
+    width: 1059,
+    height: 1600,
+    alt: "Lilac jute cotton Monereen kaftan photographed outdoors",
+  },
+  {
+    src: "/brand/gallery/solids-dsc-3715-01.jpg",
+    width: 1600,
+    height: 1060,
+    alt: "Green Monereen solid garment in a garden setting",
+  },
+  {
+    src: "/brand/gallery/prints-22713.jpg",
+    width: 1069,
+    height: 1600,
+    alt: "Pink Monereen print with intricate surface detail",
+  },
+  {
+    src: "/brand/gallery/solids-2939.jpg",
+    width: 1600,
+    height: 1060,
+    alt: "Dark Monereen garment with considered embellishment",
+  },
+  {
+    src: "/brand/gallery/prints-img-20240610-wa0018.jpg",
+    width: 1200,
+    height: 1600,
+    alt: "Deep red Monereen printed garment",
+  },
+  {
+    src: "/brand/gallery/solids-dsc-3847-01.jpg",
+    width: 1600,
+    height: 1060,
+    alt: "Blue Monereen garment photographed in a garden",
+  },
 ] as const;
 
 export default function MagazinePage() {
   return (
-    <>
+    <div className={styles.shell}>
       <Header />
-      <main className="bg-[#f2eee5] pt-16 text-[#181713]">
-        <section className="relative min-h-[calc(100svh-4rem)] overflow-hidden bg-black text-white">
-          <Image
-            src="/brand/gallery/prints-dsc04233.jpg"
-            alt="Monereen printed kaftan against vivid yellow cloth"
-            fill
-            priority
-            unoptimized
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-between p-4 sm:p-7 md:p-10">
-            <div className="flex items-start justify-between border-t border-white/80 pt-3 text-[10px] uppercase tracking-[0.22em]">
-              <p>Issue 01 · August 2026</p>
-              <p className="text-right">Fashion · Craft · Culture<br />Dhaka, Bangladesh</p>
+      <MagazineProgress />
+
+      <main className={styles.page}>
+        <section className={styles.cover}>
+          <div className={styles.coverCopy}>
+            <div className={styles.issueMark}>
+              <span>Monereen Magazine</span>
+              <span>Issue 01 / August 2026</span>
             </div>
-            <div>
-              <h1 className="font-heading text-[clamp(4.5rem,15vw,14rem)] font-normal leading-[0.68] tracking-[-0.07em]">Monereen</h1>
-              <div className="mt-8 grid gap-5 border-y border-white/70 py-4 sm:grid-cols-[1fr_auto] sm:items-end">
-                <p className="max-w-xl font-heading text-2xl leading-tight sm:text-3xl md:text-4xl">The Pivotal Loop<br />A house in the making</p>
-                <Link href="#inside" className="flex items-center gap-3 text-[10px] uppercase tracking-[0.2em]">Open the issue <ArrowDown size={15} aria-hidden="true" /></Link>
-              </div>
+
+            <div className={styles.coverTitle}>
+              <p className={styles.coverTheme}>Personal expression in cloth</p>
+              <h1>
+                The pivotal <em>loop.</em>
+              </h1>
+              <p className={styles.coverDeck}>
+                A house pauses, gathers its memory, and begins its next chapter with greater intention.
+              </p>
             </div>
+
+            <Link href="#contents" className={styles.textLink}>
+              Enter the issue <ArrowRight size={16} weight="light" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <MagazineHeroMedia className={styles.coverMedia}>
+            <Image
+              src="/brand/gallery/prints-dsc04233.jpg"
+              alt="Woman wearing a violet floral Monereen kaftan against yellow cloth"
+              fill
+              priority
+              sizes="(max-width: 767px) 100vw, 66vw"
+              className={styles.coverImage}
+            />
+            <p className={styles.coverImageLine}>
+              Cloth, colour, and the confidence to remain personal.
+            </p>
+          </MagazineHeroMedia>
+        </section>
+
+        <section id="contents" className={styles.contents}>
+          <Reveal className={styles.sectionLead}>
+            <p className={styles.topic}>Inside the issue</p>
+            <h2>Four ways of looking.</h2>
+            <p>
+              Move from the origin of the house to the details that give every piece its voice.
+            </p>
+          </Reveal>
+
+          <div className={styles.contentsGrid}>
+            {contents.map((item, index) => (
+              <Reveal key={item.page} delay={index * 0.06} className={styles.contentItem}>
+                <Link href={item.href}>
+                  <span className={styles.pageNumber}>{item.page}</span>
+                  <span className={styles.contentTitle}>{item.title}</span>
+                  <span className={styles.contentNote}>{item.note}</span>
+                  <ArrowUpRight className={styles.contentArrow} size={18} weight="light" aria-hidden="true" />
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </section>
 
-        <section id="inside" className="scroll-mt-16 border-b border-[#292720] bg-[#181713] px-5 py-20 text-[#f2eee5] sm:px-8 md:py-28">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="grid gap-12 md:grid-cols-12">
-              <div className="md:col-span-4">
-                <p className="text-[10px] uppercase tracking-[0.24em] text-white/55">Inside Issue 01</p>
-                <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.045em] md:text-7xl">Contents</h2>
-              </div>
-              <ol className="border-t border-white/35 md:col-span-7 md:col-start-6">
-                {contents.map(([page, title, note]) => (
-                  <li key={page} className="grid grid-cols-[3rem_1fr] gap-4 border-b border-white/25 py-5 md:grid-cols-[4rem_1fr_12rem] md:items-baseline">
-                    <span className="text-[10px] tabular-nums text-white/45">{page}</span>
-                    <span className="font-heading text-2xl md:text-3xl">{title}</span>
-                    <span className="col-start-2 text-xs text-white/55 md:col-start-auto">{note}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-        </section>
+        <article id="pivotal-loop" className={styles.opener}>
+          <Reveal className={styles.openerHeadline}>
+            <p className={styles.topic}>The origin</p>
+            <h2>A private instinct found a public form.</h2>
+          </Reveal>
 
-        <article className="px-5 py-24 sm:px-8 md:py-36">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="grid gap-12 md:grid-cols-12">
-              <header className="md:col-span-7">
-                <p className="text-[10px] uppercase tracking-[0.22em]">Essay 01 · Identity</p>
-                <h2 className="mt-6 font-heading text-6xl leading-[0.9] tracking-[-0.05em] md:text-8xl lg:text-9xl">The pivotal<br />loop.</h2>
-              </header>
-              <div className="md:col-span-4 md:col-start-9 md:pt-20">
-                <p className="font-heading text-2xl leading-snug">What begins as personal expression can become a lasting cultural practice.</p>
-                <p className="mt-7 text-sm leading-7 text-[#625c51] md:text-base">
-                  Monereen began through passion: a private instinct for cloth, detail, and bespoke creation. The path since has been deliberate—an identity formed, a pause taken, and a return with greater clarity about what the house can become.
-                </p>
-              </div>
-            </div>
+          <Reveal className={styles.openerBody} delay={0.08}>
+            <p className={styles.dropCap}>
+              Monereen began through passion: an instinct for cloth, detail, and bespoke creation.
+              What followed was deliberate. An identity formed, a pause created room to think, and the
+              return brought greater clarity about what the house can become.
+            </p>
+            <p>
+              The work remains intimate even as the horizon expands. Every garment carries the trace of
+              a hand, the logic of its material, and space for the wearer to make it their own.
+            </p>
+          </Reveal>
 
-            <div className="mt-24 grid gap-5 md:mt-36 md:grid-cols-12">
-              <figure className="md:col-span-7">
-                <Image src="/brand/gallery/kaftans-copy-of-dsc04739-04.jpg" alt="Three women wearing colourful Monereen kaftans" width={1244} height={1600} unoptimized className="h-auto w-full" />
-                <figcaption className="mt-3 flex justify-between text-[9px] uppercase tracking-[0.18em]"><span>Collective expression</span><span>Fig. 01</span></figcaption>
-              </figure>
-              <div className="flex flex-col justify-end md:col-span-4 md:col-start-9 md:pb-24">
-                <p className="border-l-2 border-[#181713] pl-6 font-heading text-3xl leading-tight md:text-5xl">“Distinct creations begin with the courage to remain personal.”</p>
-              </div>
-            </div>
-          </div>
+          <Reveal className={styles.openerPortrait} delay={0.1}>
+            <Image
+              src="/brand/gallery/kaftans-copy-of-dsc04739-04.jpg"
+              alt="Three women wearing expressive Monereen kaftans"
+              width={1244}
+              height={1600}
+              sizes="(max-width: 767px) 100vw, 52vw"
+            />
+          </Reveal>
+
+          <Reveal className={styles.pullQuote} delay={0.12}>
+            <blockquote>
+              Distinct creations begin with the courage to remain personal.
+            </blockquote>
+          </Reveal>
         </article>
 
-        <section className="grid min-h-[92svh] bg-[#d3b51e] md:grid-cols-2">
-          <div className="relative min-h-[70svh] md:min-h-0">
-            <Image src="/brand/gallery/prints-dsc04240.jpg" alt="Violet floral Monereen garment against yellow cloth" fill unoptimized sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+        <section id="colour-memory" className={styles.colourStory}>
+          <div className={styles.colourMedia}>
+            <Image
+              src="/brand/gallery/prints-dsc04240.jpg"
+              alt="Violet floral Monereen garment against yellow cloth"
+              fill
+              sizes="100vw"
+              className={styles.colourImage}
+            />
           </div>
-          <div className="flex flex-col justify-between px-6 py-12 sm:px-10 md:px-14 md:py-16">
-            <div className="flex justify-between border-t border-black/60 pt-3 text-[10px] uppercase tracking-[0.2em]"><span>Colour study</span><span>02 / 04</span></div>
-            <p className="py-24 font-heading text-5xl leading-[0.94] tracking-[-0.04em] md:text-7xl lg:text-8xl">Print is rhythm.<br />Colour is memory.</p>
-            <p className="max-w-md text-sm leading-7">Motifs gather like fragments of a journey—botanical marks, repetitions, contrast, and colour held in conversation.</p>
-          </div>
+          <Reveal className={styles.colourCopy}>
+            <p className={styles.topic}>Colour has memory</p>
+            <h2>Print becomes rhythm.</h2>
+            <p>
+              Botanical marks, repetition, and contrast gather like fragments of a journey. The surface
+              speaks before the silhouette moves.
+            </p>
+          </Reveal>
         </section>
 
-        <article className="px-5 py-24 sm:px-8 md:py-36">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="grid gap-10 md:grid-cols-12">
-              <div className="md:col-span-4">
-                <p className="text-[10px] uppercase tracking-[0.22em]">Essay 02 · Material</p>
-                <h2 className="mt-5 font-heading text-5xl leading-none tracking-[-0.04em] md:text-7xl">A language<br />of cloth.</h2>
-              </div>
-              <div className="columns-1 gap-8 text-sm leading-7 text-[#625c51] sm:columns-2 md:col-span-7 md:col-start-6 md:text-base">
-                <p>Monereen’s vocabulary moves between expressive print and quiet solid cloth. One foregrounds motif and movement; the other reveals construction, proportion, embroidery, and finishing by hand.</p>
-                <p className="mt-7 sm:mt-0">The long view extends this language across apparel, artisanal craft, and design innovation while remaining rooted in traditional craftsmanship and indigenous textiles close to home.</p>
-              </div>
-            </div>
+        <article id="language-of-cloth" className={styles.materials}>
+          <Reveal className={styles.materialIntro}>
+            <p className={styles.topic}>A language of cloth</p>
+            <h2>The hand is visible when you look closely.</h2>
+            <p>
+              Expressive print foregrounds movement. Solid cloth makes room for construction,
+              proportion, embroidery, and finishing to come forward.
+            </p>
+          </Reveal>
 
-            <div className="mt-20 grid grid-cols-2 gap-3 md:mt-28 md:grid-cols-4 md:gap-5">
-              {[
-                ["/brand/gallery/prints-33543.jpg", 1200, 1600, "Surface"],
-                ["/brand/gallery/prints-33266.jpg", 1600, 1600, "Ornament"],
-                ["/brand/gallery/solids-12674.jpg", 1059, 1600, "Line"],
-                ["/brand/gallery/solids-2939.jpg", 1600, 1060, "Detail"],
-              ].map(([src, width, height, label], index) => (
-                <figure key={String(src)} className={index % 2 ? "mt-14 md:mt-24" : ""}>
-                  <Image src={String(src)} alt={`Monereen ${String(label).toLowerCase()} study`} width={Number(width)} height={Number(height)} unoptimized className="h-auto w-full" />
-                  <figcaption className="mt-3 border-t border-[#aaa092] pt-2 text-[9px] uppercase tracking-[0.18em]">0{index + 1} · {label}</figcaption>
+          <div className={styles.materialGrid}>
+            {materialStudies.map((study, index) => (
+              <Reveal key={study.src} delay={index * 0.08} className={styles.materialFigure}>
+                <figure>
+                  <Image
+                    src={study.src}
+                    alt={study.alt}
+                    width={study.width}
+                    height={study.height}
+                    sizes="(max-width: 767px) 100vw, 34vw"
+                  />
+                  <figcaption>{study.caption}</figcaption>
                 </figure>
-              ))}
-            </div>
+              </Reveal>
+            ))}
           </div>
+
+          <Reveal className={styles.horizon}>
+            <p className={styles.horizonLead}>Where the horizon opens</p>
+            <div className={styles.horizonCopy}>
+              <h2>Apparel. Artisanal craft. Design innovation.</h2>
+              <p>
+                The long view grows a diverse body of work while staying close to traditional
+                craftsmanship, indigenous textiles, and the artisan communities that carry knowledge
+                forward.
+              </p>
+            </div>
+          </Reveal>
         </article>
 
-        <section className="bg-[#181713] px-3 py-16 text-[#f2eee5] sm:px-5 md:py-24">
-          <div className="mx-auto max-w-[96rem]">
-            <div className="mb-10 grid gap-6 border-t border-white/40 pt-4 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/50">Portfolio / Contact sheet</p>
-                <h2 className="mt-4 font-heading text-5xl tracking-[-0.045em] md:text-7xl">The working index</h2>
-              </div>
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/50">39 frames · 03 studies</p>
-            </div>
-            <div className="grid grid-cols-2 gap-x-2 gap-y-7 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {allBrandImages.map((image, index) => (
-                <figure key={image.src}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-white/5">
-                    <Image src={image.src} alt={`Monereen ${image.category.toLowerCase()} contact sheet frame ${image.number}`} fill unoptimized sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, (max-width: 1279px) 25vw, 20vw" className="object-cover" />
-                  </div>
-                  <figcaption className="mt-2 flex justify-between text-[8px] uppercase tracking-[0.16em] text-white/50"><span>{image.category}</span><span>{String(index + 1).padStart(2, "0")}</span></figcaption>
-                </figure>
-              ))}
-            </div>
+        <section id="working-edit" className={styles.workingEdit}>
+          <Reveal className={styles.editLead}>
+            <p className={styles.topic}>The working edit</p>
+            <h2>Six frames from an evolving archive.</h2>
+            <Link href="/archive#image-index" className={styles.textLink}>
+              View all 39 images <ArrowUpRight size={16} weight="light" aria-hidden="true" />
+            </Link>
+          </Reveal>
+
+          <div className={styles.editGrid}>
+            {selectedFrames.map((frame, index) => (
+              <Reveal key={frame.src} delay={(index % 3) * 0.06} className={styles.editFrame}>
+                <Image
+                  src={frame.src}
+                  alt={frame.alt}
+                  width={frame.width}
+                  height={frame.height}
+                  sizes="(max-width: 767px) 100vw, 40vw"
+                />
+              </Reveal>
+            ))}
           </div>
         </section>
 
-        <section className="bg-[#c34f33] px-5 py-24 text-[#181713] sm:px-8 md:py-36">
-          <div className="mx-auto max-w-[92rem]">
-            <p className="text-[10px] uppercase tracking-[0.22em]">End paper · Issue 01</p>
-            <div className="mt-16 grid gap-12 md:grid-cols-2 md:items-end">
-              <h2 className="font-heading text-6xl leading-[0.86] tracking-[-0.055em] md:text-8xl lg:text-9xl">The story<br />continues.</h2>
-              <div className="flex flex-col gap-5 text-xs uppercase tracking-[0.2em] md:items-end">
-                <Link href="/archive" className="flex items-center gap-3 border-b border-black/60 pb-2"><ArrowLeft size={15} aria-hidden="true" /> Return to archive</Link>
-                <Link href="/about" className="flex items-center gap-3 border-b border-black/60 pb-2">Continue to our story <ArrowUpRight size={15} aria-hidden="true" /></Link>
-              </div>
+        <section className={styles.endPaper}>
+          <Reveal className={styles.endPaperInner}>
+            <p className={styles.topic}>Continue through Monereen</p>
+            <h2>The story is still taking shape.</h2>
+            <div className={styles.endLinks}>
+              <Link href="/archive" className={styles.textLink}>
+                <ArrowLeft size={16} weight="light" aria-hidden="true" /> Image archive
+              </Link>
+              <Link href="/about" className={styles.textLink}>
+                Our story <ArrowRight size={16} weight="light" aria-hidden="true" />
+              </Link>
             </div>
-          </div>
+          </Reveal>
         </section>
       </main>
+
       <Footer />
-    </>
+    </div>
   );
 }
