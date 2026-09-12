@@ -16,6 +16,12 @@
 **Restore:** sign in as an existing administrator and remove the newly created user under Settings → Users; do not delete the database or alter other user records.
 **Re-check after rollback:** confirm the removed email can no longer authenticate and existing administrator access still works.
 
+## MinIO browser uploads — rollback plan
+
+**Revert to:** the timestamped `/etc/nginx/sites-available/monereen.com.before-browser-uploads.*` and `/etc/monereen/backend.env.before-browser-uploads.*` backups made by the installer.
+**Restore:** copy both backups back, run `nginx -t`, reload nginx, restart `monereen-medusa`, and wait for `/health` to return 200.
+**Re-check after rollback:** verify `https://monereen.com/` returns 200, the existing media URLs still load, and no browser upload is routed to an unintended endpoint.
+
 ## staging branch frontend — rollback plan
 
 **Revert to:** the static wireframe site and no `monereen-staging-storefront.service` unit.
