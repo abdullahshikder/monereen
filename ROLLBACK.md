@@ -10,6 +10,12 @@
 **Restore:** restore the pre-change `/etc/monereen/backend.env` (the installer records a timestamped backup), disable and remove only the `adm.monereen.com` nginx site, optionally delete its Certbot certificate, and remove its Cloudflare DNS record.
 **Re-check after rollback:** restart Medusa if the environment file was restored, run `nginx -t`, reload nginx, verify `https://monereen.com/app` still loads, and verify `adm.monereen.com` no longer resolves or serves content.
 
+## Medusa admin user creation — rollback plan
+
+**Revert to:** the user list before the CLI invocation.
+**Restore:** sign in as an existing administrator and remove the newly created user under Settings → Users; do not delete the database or alter other user records.
+**Re-check after rollback:** confirm the removed email can no longer authenticate and existing administrator access still works.
+
 ## staging branch frontend — rollback plan
 
 **Revert to:** the static wireframe site and no `monereen-staging-storefront.service` unit.
