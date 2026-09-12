@@ -53,17 +53,8 @@ fi
 # pinned pnpm without installing a second system-wide toolchain.
 export PATH="$runtime_dir/bin:$PATH"
 cd "$repo"
-runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
-    NEXT_DIST_DIR=.next-staging \
-    NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com \
-    MEDUSA_BACKEND_URL=http://127.0.0.1:9000 \
-    "$corepack_bin" pnpm install --frozen-lockfile
-runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
-    NEXT_DIST_DIR=.next-staging \
-    NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com \
-    MEDUSA_BACKEND_URL=http://127.0.0.1:9000 \
-    "$corepack_bin" pnpm --filter storefront build
-
+# Storefront routes are prerendered during build, so the publishable key must
+# exist before Next fetches catalog data rather than only at process startup.
 publishable_key="$(sed -n 's/^MEDUSA_PUBLISHABLE_KEY=//p' "$services_env" | head -1)"
 [[ -n "$publishable_key" ]] || { echo "Missing MEDUSA_PUBLISHABLE_KEY in $services_env" >&2; exit 1; }
 
@@ -73,8 +64,22 @@ NEXT_DIST_DIR=.next-staging
 MEDUSA_BACKEND_URL=http://127.0.0.1:9000
 NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com
 MEDUSA_PUBLISHABLE_KEY=$publishable_key
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$publishable_key
 EOF
 chmod 600 "$frontend_env"
+
+runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
+    NEXT_DIST_DIR=.next-staging \
+    NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com \
+    MEDUSA_BACKEND_URL=http://127.0.0.1:9000 \
+    "$corepack_bin" pnpm install --frozen-lockfile
+runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
+    NEXT_DIST_DIR=.next-staging \
+    NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com \
+    MEDUSA_BACKEND_URL=http://127.0.0.1:9000 \
+    MEDUSA_PUBLISHABLE_KEY="$publishable_key" \
+    NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY="$publishable_key" \
+    "$corepack_bin" pnpm --filter storefront build
 
 cat > "$service" <<EOF
 [Unit]
