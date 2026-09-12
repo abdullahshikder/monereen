@@ -22,6 +22,8 @@
 **Restore:** copy both backups back, run `nginx -t`, reload nginx, restart `monereen-medusa`, and wait for `/health` to return 200.
 **Re-check after rollback:** verify `https://monereen.com/` returns 200, the existing media URLs still load, and no browser upload is routed to an unintended endpoint.
 
+**CORS header follow-up:** if the duplicate-header repair needs reversal, restore the installer’s `/etc/nginx/sites-available/monereen.com.before-minio-cors-headers.*` backup, run `nginx -t`, and reload nginx.
+
 ## staging branch frontend — rollback plan
 
 **Revert to:** the static wireframe site and no `monereen-staging-storefront.service` unit.
