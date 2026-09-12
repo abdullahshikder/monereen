@@ -13,27 +13,24 @@ export const metadata: Metadata = {
 const craftDirections = [
   {
     id: "potlis",
-    number: "01",
     title: "Potlis",
-    category: "Bags · In development",
+    category: "Bags in development",
     description: "Compact forms envisioned through textile, surface, and ornament.",
     image: "/brand/archive/prints-detail.jpg",
     alt: "Close detail of layered red and printed Monereen textiles",
   },
   {
     id: "totes",
-    number: "02",
     title: "Totes",
-    category: "Bags · In development",
+    category: "Bags in development",
     description: "Everyday utility shaped by expressive cloth and considered construction.",
     image: "/brand/editorial/print-blue.jpg",
     alt: "Close view of embroidery and print on a deep blue Monereen garment",
   },
   {
     id: "scarves",
-    number: "03",
     title: "Scarves",
-    category: "Accessories · In development",
+    category: "Accessories in development",
     description: "A future study in drape, motif, colour, and movement.",
     image: "/brand/editorial/print-red.jpg",
     alt: "Detail of a red printed Monereen garment",
@@ -44,53 +41,50 @@ export default function CraftsPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#f6f2ea] pt-16 text-[#211f1b]">
-        <section className="grid min-h-[80svh] md:grid-cols-2">
-          <div className="flex flex-col justify-between px-5 py-12 sm:px-8 md:px-12 md:py-16">
-            <p className="text-[10px] uppercase tracking-[0.2em]">Craft / Material language</p>
-            <div className="py-20">
-              <h1 className="font-heading text-[clamp(4rem,9vw,8rem)] leading-[0.82] tracking-[-0.05em]">Made by attention.</h1>
-              <p className="mt-9 max-w-lg text-sm leading-7 text-[#655e54] md:text-base">
-                A growing study of the material gestures behind Monereen—from printed surface and embroidery to the future forms they can inhabit.
+      <main className="bg-[#f3f2f2] pt-16 text-[#201e1d]">
+        <section className="mx-auto grid max-w-[1440px] gap-8 px-5 py-8 sm:px-8 md:grid-cols-[minmax(20rem,.8fr)_minmax(0,1.2fr)] md:py-10">
+          <div className="flex flex-col justify-between border-t border-[#201e1d]/40 pt-6 md:border-t-0 md:pt-0">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Craft</p>
+              <h1 className="mt-4 max-w-xl font-body text-4xl font-bold leading-[1.03] tracking-[-0.03em] sm:text-5xl md:text-6xl">Made by attention.</h1>
+              <p className="mt-6 max-w-lg text-sm leading-7 text-[#605d5d] md:text-base">
+                A growing study of the material gestures behind Monereen, from printed surface and embroidery to the future forms they can inhabit.
               </p>
             </div>
-            <p className="border-t border-[#aaa092] pt-5 text-[10px] uppercase tracking-[0.18em] text-[#6e655a]">Bags · Accessories · Textile studies</p>
+            <Link href="#category-studies" className="mt-10 inline-flex w-fit items-center gap-3 border-b border-[#201e1d] pb-2 text-sm font-semibold transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">
+              Explore material studies <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
           </div>
-          <div className="relative min-h-[65svh] md:min-h-0">
-            <Image src="/brand/editorial/solid-duo.jpg" alt="Two women wearing embroidered black Monereen garments" fill priority sizes="(max-width: 767px) 100vw, 50vw" className="object-cover" />
+          <div className="relative aspect-[4/3] overflow-hidden bg-[#d7d3d3] grayscale md:aspect-auto md:min-h-[34rem]">
+            <Image src="/brand/editorial/solid-duo.jpg" alt="Two women wearing embroidered black Monereen garments" fill priority sizes="(max-width: 767px) 100vw, 60vw" className="object-cover" />
           </div>
         </section>
 
-        <section className="border-y border-[#d8d1c4] bg-[#e7ded2] px-5 py-20 sm:px-8 md:py-28">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="mb-14 grid gap-8 md:grid-cols-[0.7fr_1.5fr]">
-              <p className="text-[10px] uppercase tracking-[0.2em]">Category studies</p>
-              <h2 className="max-w-4xl font-heading text-4xl leading-tight tracking-[-0.035em] md:text-6xl">The craft portfolio begins here.</h2>
-            </div>
-            <div className="grid gap-12 md:grid-cols-3 md:gap-5">
+        <section id="category-studies" className="scroll-mt-24 border-t-2 border-[#201e1d]/40 px-5 py-14 sm:px-8 md:py-20">
+          <div className="mx-auto max-w-[1440px]">
+            <h2 className="max-w-2xl font-body text-3xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-4xl">The craft portfolio begins here.</h2>
+            <div className="mt-10 grid gap-x-5 gap-y-12 md:grid-cols-3 md:gap-x-7 md:gap-y-16">
               {craftDirections.map((item, index) => (
-                <article id={item.id} key={item.id} className={`scroll-mt-24 ${index === 1 ? "md:mt-24" : ""}`}>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-[#d8d1c4]">
+                <Link href={`/crafts/${item.id}`} id={item.id} key={item.id} className={`group block scroll-mt-24 ${index === 1 ? "md:mt-14" : ""}`}>
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[#d7d3d3] grayscale transition-[filter] duration-500 hover:grayscale-0">
                     <Image src={item.image} alt={item.alt} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover" />
                   </div>
-                  <div className="mt-5 border-t border-[#aaa092] pt-4">
-                    <p className="text-[9px] uppercase tracking-[0.18em] text-[#6e655a]">{item.number} · {item.category}</p>
-                    <h3 className="mt-3 font-heading text-3xl">{item.title}</h3>
-                    <p className="mt-4 max-w-sm text-sm leading-6 text-[#655e54]">{item.description}</p>
-                  </div>
-                </article>
+                  <p className="mt-4 text-[10px] uppercase tracking-[0.13em] text-[#605d5d]">{item.category}</p>
+                  <h3 className="mt-2 font-body text-xl font-semibold tracking-[-0.02em] transition-colors group-hover:text-[#ec3013]">{item.title}</h3>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-[#605d5d]">{item.description}</p>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="bg-[#211f1b] px-5 py-24 text-[#f6f2ea] sm:px-8 md:py-32">
-          <div className="mx-auto grid max-w-[92rem] gap-10 md:grid-cols-2 md:items-end">
-            <h2 className="font-heading text-5xl leading-none tracking-[-0.04em] md:text-7xl">A portfolio still taking shape.</h2>
-            <div className="md:justify-self-end">
-              <p className="max-w-md text-sm leading-7 text-white/70">The current photographs document Monereen’s established textile language. Product-specific bag and scarf imagery will join this page as those categories are completed.</p>
-              <Link href="/about#collaborate" className="mt-8 inline-flex items-center gap-3 border-b border-current pb-2 text-xs uppercase tracking-[0.2em]">
-                Collaborate with Monereen <ArrowUpRight size={16} aria-hidden="true" />
+        <section className="border-t-2 border-[#201e1d]/40 px-5 py-14 sm:px-8 md:py-20">
+          <div className="mx-auto grid max-w-[1440px] gap-8 border-b border-[#201e1d]/40 pb-12 md:grid-cols-[minmax(0,1fr)_minmax(18rem,.7fr)] md:items-end">
+            <h2 className="max-w-2xl font-body text-3xl font-bold leading-[1.05] tracking-[-0.03em] sm:text-4xl">A portfolio still taking shape.</h2>
+            <div>
+              <p className="max-w-md text-sm leading-7 text-[#605d5d]">The current photographs document Monereen’s textile language. Product-specific bag and scarf imagery will join this page as those categories are completed.</p>
+              <Link href="/about#collaborate" className="mt-7 inline-flex bg-[#ec3013] px-6 py-3.5 text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800]">
+                Collaborate with Monereen
               </Link>
             </div>
           </div>

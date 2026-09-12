@@ -12,31 +12,32 @@ export default async function CartPage() {
   return (
     <>
       <Header />
-      <main className="pt-16">
-        <section className="py-section-lg px-6">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="font-heading text-5xl text-charcoal mb-12">
+      <main className="bg-[#f3f2f2] pt-16 text-[#201e1d]">
+        <section className="mx-auto max-w-[1120px] px-5 py-14 sm:px-8 md:py-20">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Cart</p>
+            <h1 className="mt-3 font-body text-4xl font-bold tracking-[-0.03em] sm:text-5xl">
               Your Bag
             </h1>
 
             {items.length === 0 || !cart ? (
-              <div className="text-center py-section-md">
-                <p className="font-body text-lg text-stone mb-8">
+              <div className="border-y border-[#201e1d]/40 py-16">
+                <p className="font-body text-lg text-[#605d5d] mb-8">
                   Your bag is empty.
                 </p>
                 <Link
                   href="/shop"
-                  className="inline-block font-body text-sm uppercase tracking-wider bg-charcoal text-ivory px-8 py-4 hover:bg-accent transition-colors"
+                  className="inline-block bg-[#ec3013] px-6 py-3.5 font-body text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800]"
                 >
                   Continue Shopping
                 </Link>
               </div>
             ) : (
-              <div className="grid gap-12 lg:grid-cols-[1fr_20rem]">
-                <div className="divide-y divide-sand border-y border-sand">
+              <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_20rem]">
+                <div className="divide-y divide-[#201e1d]/25 border-y border-[#201e1d]/40">
                   {items.map((item) => (
                     <article key={item.id} className="py-6 flex gap-5">
-                      <div className="relative h-36 w-28 shrink-0 bg-sand overflow-hidden">
+                      <div className="relative h-36 w-28 shrink-0 overflow-hidden bg-[#d7d3d3] grayscale">
                         {item.thumbnail ? (
                           <Image
                             src={item.thumbnail}
@@ -46,8 +47,8 @@ export default async function CartPage() {
                             className="object-cover"
                           />
                         ) : (
-                          <div className="h-full flex items-center justify-center text-stone">
-                            ◇
+                          <div className="flex h-full items-center justify-center px-3 text-center text-[9px] font-semibold uppercase tracking-[0.13em] text-[#605d5d]">
+                            Image being prepared
                           </div>
                         )}
                       </div>
@@ -56,7 +57,7 @@ export default async function CartPage() {
                           <div>
                             <Link
                               href={item.product_handle ? `/products/${item.product_handle}` : "/shop"}
-                              className="font-heading text-xl hover:text-accent transition-colors"
+                              className="font-body text-lg font-semibold transition-colors hover:text-[#ec3013]"
                             >
                               {item.title}
                             </Link>
@@ -103,9 +104,9 @@ export default async function CartPage() {
                   ))}
                 </div>
 
-                <aside className="bg-sand/50 p-6 h-fit">
-                  <h2 className="font-heading text-2xl mb-6">Summary</h2>
-                  <div className="flex justify-between font-body text-sm pb-4 border-b border-stone/40">
+                <aside className="h-fit border border-[#201e1d]/40 p-6">
+                  <h2 className="font-body text-lg font-semibold mb-6">Summary</h2>
+                  <div className="flex justify-between font-body text-sm pb-4 border-b border-[#201e1d]/40">
                     <span>Subtotal</span>
                     <span>
                       {formatAmount(
@@ -119,7 +120,7 @@ export default async function CartPage() {
                   </p>
                   <Link
                     href="/checkout"
-                    className="block text-center bg-charcoal text-ivory font-body text-sm uppercase tracking-wider py-4 hover:bg-accent transition-colors"
+                    className="block bg-[#ec3013] py-4 text-center font-body text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800]"
                   >
                     Checkout
                   </Link>

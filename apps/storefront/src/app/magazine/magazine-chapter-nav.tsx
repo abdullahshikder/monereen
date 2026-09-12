@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 const chapters = [
-  { id: "manifesto", number: "01", title: "Origin" },
-  { id: "experience", number: "02", title: "Colour" },
-  { id: "language-of-cloth", number: "03", title: "Cloth" },
-  { id: "working-edit", number: "04", title: "Working edit" },
+  { id: "manifesto", title: "Origin" },
+  { id: "experience", title: "Colour" },
+  { id: "language-of-cloth", title: "Cloth" },
+  { id: "working-edit", title: "Working edit" },
 ] as const;
 
 type ChapterId = (typeof chapters)[number]["id"];
@@ -39,9 +39,9 @@ export function MagazineChapterNav() {
   return (
     <aside aria-label="Magazine reading progress" className={styles.chapterNav}>
       <div className={styles.chapterMeta}>
-        <p className={styles.chapterIssue}>Issue 01</p>
+        <p className={styles.chapterIssue}>Monereen Magazine</p>
         <p className={styles.chapterStatus} aria-live="polite">
-          <span>{activeChapter.number} / 04</span>
+          <span>Reading</span>
           {activeChapter.title}
         </p>
       </div>

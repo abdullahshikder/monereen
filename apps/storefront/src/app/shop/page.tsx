@@ -1,35 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import {
-  formatAmount,
-  getProducts,
-  isVariantAvailable,
-} from "@/lib/commerce";
+import { Header } from "@/components/layout/header";
+import { formatAmount, getProducts, isVariantAvailable } from "@/lib/commerce";
 import type { Product } from "@/lib/commerce-types";
-
-const catalogueChapters = [
-  {
-    title: "Printed",
-    href: "/archive#collections",
-    image: "/brand/editorial/print-black.jpg",
-    alt: "Black and ivory printed Monereen garment",
-  },
-  {
-    title: "Kaftans",
-    href: "/shop?category=kaftans",
-    image: "/brand/editorial/kaftan-silk.jpg",
-    alt: "Silk printed Monereen kaftan against pink cloth",
-  },
-  {
-    title: "Solids",
-    href: "/archive",
-    image: "/brand/editorial/solid-black.jpg",
-    alt: "Black Monereen garment with gold embellishment",
-  },
-] as const;
 
 function ProductCard({ product }: { product: Product }) {
   const variants = product.variants ?? [];
@@ -39,40 +14,48 @@ function ProductCard({ product }: { product: Product }) {
   const price = pricedVariant?.calculated_price;
   const available = variants.some(isVariantAvailable);
   const image = product.thumbnail ?? product.images?.[0]?.url;
+  const optionCount = variants.length;
 
   return (
     <Link href={`/products/${product.handle}`} className="group block">
-      <div className="aspect-[3/4] bg-sand mb-4 overflow-hidden relative">
+      <div className="relative aspect-[3/4] overflow-hidden bg-[#d7d3d3]">
         {image ? (
           <Image
             src={image}
             alt={product.title}
             fill
-            sizes="(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            sizes="(max-width: 1023px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.015]"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-stone">
-            <span className="text-4xl">◇</span>
+          <div className="flex h-full w-full items-center justify-center px-5 text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-[#605d5d]">
+            Image being prepared
           </div>
         )}
         {!available && (
-          <div className="absolute inset-0 bg-ivory/70 flex items-center justify-center">
-            <span className="font-body text-xs uppercase tracking-widest text-charcoal">
-              Sold Out
-            </span>
+          <div className="absolute inset-0 flex items-center justify-center bg-[#f3f2f2]/78">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#201e1d]">Sold out</span>
           </div>
         )}
       </div>
-      <h3 className="font-body text-sm text-charcoal mb-1">{product.title}</h3>
-      <div className="font-body text-sm text-stone">
-        {price?.calculated_amount != null && price.currency_code ? (
-          <span className={available ? "text-charcoal" : "text-stone"}>
-            {formatAmount(price.calculated_amount, price.currency_code)}
+      <div className="pt-4">
+        <div className="flex items-start justify-between gap-4 text-sm">
+          <div>
+            <h2 className="font-medium tracking-[-0.015em] transition-colors group-hover:text-[#ec3013]">{product.title}</h2>
+            {product.subtitle && <p className="mt-1 text-xs text-[#605d5d]">{product.subtitle}</p>}
+          </div>
+          <p className="shrink-0 text-[#201e1d]">
+            {price?.calculated_amount != null && price.currency_code
+              ? formatAmount(price.calculated_amount, price.currency_code)
+              : "Price unavailable"}
+          </p>
+        </div>
+        <div className="mt-3 flex items-center justify-between text-[10px] font-semibold uppercase tracking-[0.13em] text-[#605d5d]">
+          <span>{available ? `${optionCount} ${optionCount === 1 ? "option" : "options"}` : "Currently sold out"}</span>
+          <span className="inline-flex items-center gap-1.5 transition-colors group-hover:text-[#ec3013]">
+            View piece <ArrowUpRight size={14} weight="light" aria-hidden="true" />
           </span>
-        ) : (
-          <span>Price unavailable</span>
-        )}
+        </div>
       </div>
     </Link>
   );
@@ -91,63 +74,48 @@ export default async function ShopPage() {
   return (
     <>
       <Header />
-      <main className="bg-[#f6f2ea] pt-16 text-[#211f1b]">
-        <section className="grid border-b border-[#d8d1c4] md:grid-cols-[0.82fr_1.18fr]">
-          <div className="flex min-h-[58svh] flex-col justify-between px-5 py-12 sm:px-8 md:px-12 md:py-16">
-            <p className="text-[10px] uppercase tracking-[0.2em]">The catalogue</p>
-            <div className="py-16">
-              <h1 className="font-heading text-[clamp(4.5rem,9vw,8rem)] leading-[0.82] tracking-[-0.05em]">Objects with memory.</h1>
-              <p className="mt-8 max-w-lg text-sm leading-7 text-[#655e54] md:text-base">
-                Garments and crafted forms made for personal expression, each carrying a record of material, process, and hand.
-              </p>
+      <main className="min-h-[calc(100vh-4rem)] bg-[#f3f2f2] pt-16 text-[#201e1d]">
+        <section className="mx-auto max-w-[1440px] px-5 sm:px-8">
+          <div className="border-b-2 border-[#201e1d]/40 py-10 md:py-14">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#605d5d]">The current edit</p>
+            <h1 className="mt-3 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl">Shop Monereen.</h1>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-[#605d5d] md:text-base">A small collection of expressive pieces, made to be worn often and kept for a long time.</p>
+            <div className="mt-7 flex flex-wrap gap-x-7 gap-y-3 text-sm font-semibold">
+              <Link href={products.length ? "#available-pieces" : "#collection-status"} className="border-b border-[#201e1d] pb-1.5 transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">Available pieces</Link>
+              <Link href="/materials" className="border-b border-[#201e1d]/40 pb-1.5 text-[#605d5d] transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">Materials and details</Link>
+              <Link href="/archive" className="border-b border-[#201e1d]/40 pb-1.5 text-[#605d5d] transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">View the archive</Link>
             </div>
-            <p className="border-t border-[#aaa092] pt-5 text-[10px] uppercase tracking-[0.18em] text-[#6e655a]">Clothing · Craft · Limited studies</p>
           </div>
-          <div className="relative min-h-[65svh] md:min-h-[75svh]">
-            <Image src="/brand/editorial/print-black.jpg" alt="Woman wearing a black and ivory printed Monereen garment" fill priority sizes="(max-width: 767px) 100vw, 60vw" className="object-cover" />
-          </div>
-        </section>
 
-        <section className="px-5 py-20 sm:px-8 md:py-28">
-          <div className="mx-auto max-w-[92rem]">
-            <div className="mb-12 flex items-end justify-between border-b border-[#aaa092] pb-5">
-              <div>
-                <p className="mb-3 text-[10px] uppercase tracking-[0.2em]">{products.length ? "Available pieces" : "From the archive"}</p>
-                <h2 className="font-heading text-4xl tracking-[-0.035em] md:text-6xl">{products.length ? "The current edit" : "Collection preview"}</h2>
-              </div>
-              {products.length > 0 && <span className="text-[10px] tabular-nums uppercase tracking-[0.18em]">{products.length} pieces</span>}
+          {loadFailed ? (
+            <div id="collection-status" className="max-w-lg scroll-mt-24 py-16">
+              <h2 className="text-2xl font-semibold tracking-[-0.03em]">The collection is unavailable right now.</h2>
+              <p className="mt-4 text-sm leading-7 text-[#605d5d]">Please try again shortly, or explore the archive while the shop reconnects.</p>
+              <Link href="/archive" className="mt-7 inline-flex border-b border-[#201e1d] pb-1.5 text-sm font-semibold transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">
+                Explore the archive
+              </Link>
             </div>
-
-            {loadFailed ? (
-              <div className="border border-sand p-8 font-body text-stone">
-                The shop is temporarily unavailable. Check the Medusa connection
-                and publishable key.
+          ) : products.length ? (
+            <div id="available-pieces" className="scroll-mt-24 py-9 md:py-12">
+              <div className="mb-7 flex items-baseline justify-between border-b border-[#201e1d]/40 pb-4">
+                <h2 className="text-lg font-semibold tracking-[-0.02em]">Available now</h2>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#605d5d]">{products.length} {products.length === 1 ? "piece" : "pieces"}</p>
               </div>
-            ) : products.length ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-3 md:gap-x-7 md:gap-y-14">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
               </div>
-            ) : (
-              <div>
-                <p className="mb-10 max-w-xl text-sm leading-7 text-[#655e54]">The first commerce edit is being prepared. Explore the visual catalogue while product details are published through Medusa.</p>
-                <div className="grid gap-10 md:grid-cols-3 md:gap-5">
-                  {catalogueChapters.map((chapter, index) => (
-                    <Link key={chapter.title} href={chapter.href} className={`group block ${index === 1 ? "md:mt-20" : ""}`}>
-                      <div className="relative aspect-[3/4] overflow-hidden bg-[#d8d1c4]">
-                        <Image src={chapter.image} alt={chapter.alt} fill sizes="(max-width: 767px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.02]" />
-                      </div>
-                      <div className="mt-4 flex items-center justify-between border-t border-[#aaa092] pt-4">
-                        <h3 className="font-heading text-2xl">{chapter.title}</h3>
-                        <ArrowUpRight size={17} aria-hidden="true" />
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div id="collection-status" className="max-w-lg scroll-mt-24 py-16">
+              <h2 className="text-2xl font-semibold tracking-[-0.03em]">The first pieces are being prepared.</h2>
+              <p className="mt-4 text-sm leading-7 text-[#605d5d]">Browse the archive while product details are published through Monereen.</p>
+              <Link href="/archive" className="mt-7 inline-flex border-b border-[#201e1d] pb-1.5 text-sm font-semibold transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">
+                Explore the archive
+              </Link>
+            </div>
+          )}
         </section>
       </main>
       <Footer />

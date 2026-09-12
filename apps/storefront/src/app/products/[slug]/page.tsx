@@ -26,62 +26,72 @@ export default async function ProductPage({
   const firstAvailableVariant = variants.find(isVariantAvailable);
   const price = firstAvailableVariant?.calculated_price;
   const image = product.thumbnail ?? product.images?.[0]?.url;
+  const productImages = product.images?.length
+    ? product.images
+    : image
+      ? [{ id: "thumbnail", url: image }]
+      : [];
 
   return (
     <>
       <Header />
-      <main className="pt-16">
-        <section className="py-section-md px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div className="aspect-[3/4] bg-sand relative overflow-hidden">
-                {image ? (
-                  <Image
-                    src={image}
-                    alt={product.title}
-                    fill
-                    priority
-                    sizes="(max-width: 1023px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-stone">
-                    <span className="text-6xl">◇</span>
+      <main className="bg-[#f3f2f2] pt-16 text-[#201e1d]">
+        <section className="mx-auto max-w-[1440px] px-5 py-8 sm:px-8 md:py-10">
+          <nav className="mb-6 text-[11px] uppercase tracking-[0.14em] text-[#605d5d]">
+            <Link href="/shop" className="transition-colors hover:text-[#ec3013]">
+              Clothing
+            </Link>
+            <span className="mx-2">/</span>
+            <span>{product.title}</span>
+          </nav>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(21rem,.8fr)] lg:gap-12">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {productImages.length ? (
+                productImages.map((productImage, index) => (
+                  <div
+                    key={productImage.id}
+                    className={`relative aspect-[3/4] overflow-hidden bg-[#d7d3d3] grayscale ${index === 0 ? "sm:col-span-2" : ""}`}
+                  >
+                    <Image
+                      src={productImage.url}
+                      alt={index === 0 ? product.title : `${product.title} detail ${index + 1}`}
+                      fill
+                      priority={index === 0}
+                      sizes={index === 0 ? "(max-width: 1023px) 100vw, 55vw" : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 28vw"}
+                      className="object-cover"
+                    />
                   </div>
-                )}
-              </div>
+                ))
+              ) : (
+                <div className="flex aspect-[3/4] items-center justify-center bg-[#d7d3d3] px-8 text-center text-sm text-[#605d5d] sm:col-span-2">
+                  Product images are being prepared.
+                </div>
+              )}
+            </div>
 
-              {/* Product Info */}
-              <div className="flex flex-col justify-center">
-                <nav className="font-body text-xs uppercase tracking-widest text-stone mb-6">
-                  <Link href="/shop" className="hover:text-charcoal transition-colors">
-                    Shop
-                  </Link>
-                  <span className="mx-2">/</span>
-                  <span>{product.title}</span>
-                </nav>
-
-                <h1 className="font-heading text-4xl text-charcoal mb-2">
+            <div className="flex flex-col border-t border-[#201e1d]/40 pt-6 lg:border-t-0 lg:pt-0">
+                <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Monereen collection</p>
+                <h1 className="mt-4 font-body text-4xl font-bold leading-[1.03] tracking-[-0.03em] sm:text-5xl">
                   {product.title}
                 </h1>
                 {product.subtitle && (
-                  <p className="font-body text-lg text-stone mb-6">
+                  <p className="mt-3 font-body text-sm text-[#605d5d]">
                     {product.subtitle}
                   </p>
                 )}
 
-                <div className="font-body text-2xl text-charcoal mb-8">
+                <div className="mt-6 border-y border-[#201e1d]/40 py-4 font-body text-lg font-medium">
                   {price?.calculated_amount != null && price.currency_code
                     ? formatAmount(price.calculated_amount, price.currency_code)
                     : "Price unavailable"}
                 </div>
 
                 <form action={addToCart}>
-                  <fieldset className="mb-8">
-                    <legend className="font-body text-xs uppercase tracking-widest text-stone mb-3">
+                  <fieldset className="py-7">
+                    <legend className="mb-4 font-body text-[11px] uppercase tracking-[0.14em] text-[#605d5d]">
                       Choose an option
                     </legend>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                       {variants.map((variant) => {
                         const available = isVariantAvailable(variant);
                         return (
@@ -95,7 +105,7 @@ export default async function ProductPage({
                               defaultChecked={variant.id === firstAvailableVariant?.id}
                               className="peer sr-only"
                             />
-                            <span className="block border border-sand px-4 py-3 font-body text-sm text-charcoal cursor-pointer peer-checked:border-charcoal peer-checked:bg-charcoal peer-checked:text-ivory peer-disabled:opacity-40 peer-disabled:cursor-not-allowed transition-colors">
+                            <span className="block cursor-pointer border border-[#201e1d]/40 px-4 py-3 text-center font-body text-sm transition-colors peer-checked:border-[#ec3013] peer-checked:bg-[#ec3013] peer-checked:text-[#f3f2f2] peer-disabled:cursor-not-allowed peer-disabled:opacity-40">
                               {getVariantLabel(variant)}
                             </span>
                           </label>
@@ -107,21 +117,20 @@ export default async function ProductPage({
                   <button
                     type="submit"
                     disabled={!firstAvailableVariant || price?.calculated_amount == null}
-                    className="w-full bg-charcoal text-ivory font-body text-sm uppercase tracking-wider py-4 hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    className="w-full bg-[#ec3013] py-4 font-body text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800] disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     {firstAvailableVariant ? "Add to Bag" : "Sold Out"}
                   </button>
                 </form>
 
-                <div className="mt-12 pt-8 border-t border-sand">
-                  <h3 className="font-body text-xs uppercase tracking-widest text-stone mb-4">
-                    The Story
+                <div className="mt-10 border-t border-[#201e1d]/40 pt-6">
+                  <h3 className="font-body text-[11px] uppercase tracking-[0.14em] text-[#605d5d]">
+                    About this piece
                   </h3>
-                  <p className="font-body text-sm text-charcoal leading-relaxed whitespace-pre-line">
+                  <p className="mt-4 font-body text-sm leading-7 text-[#444141] whitespace-pre-line">
                     {product.description || "More details about this piece are coming soon."}
                   </p>
                 </div>
-              </div>
             </div>
           </div>
         </section>

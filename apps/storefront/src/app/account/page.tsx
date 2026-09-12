@@ -12,17 +12,24 @@ export default function AccountPage() {
   return (
     <>
       <Header />
-      <main className="min-h-[75svh] bg-[#f6f2ea] px-5 pb-24 pt-36 text-[#211f1b] sm:px-8 md:pb-36 md:pt-44">
-        <div className="mx-auto grid max-w-[92rem] gap-14 border-t border-[#aaa092] pt-8 md:grid-cols-[0.7fr_1.5fr] md:gap-20">
-          <p className="text-[10px] uppercase tracking-[0.2em]">Profile</p>
-          <div>
-            <h1 className="max-w-3xl font-heading text-5xl leading-none tracking-[-0.04em] md:text-7xl">Your place in the Monereen story.</h1>
-            <p className="mt-8 max-w-xl text-sm leading-7 text-[#5f594f] md:text-base">
-              Customer profiles will bring order history, personal information, saved pieces, and social community connections into one considered space.
-            </p>
-            <div className="mt-12 flex flex-wrap gap-4">
-              <Link href="/shop" className="bg-[#211f1b] px-7 py-3.5 text-xs uppercase tracking-[0.18em] text-[#f6f2ea]">Explore the catalogue</Link>
-              <Link href="/about" className="border border-[#211f1b] px-7 py-3.5 text-xs uppercase tracking-[0.18em]">Meet Monereen</Link>
+      <main className="min-h-[75svh] bg-[#f3f2f2] px-5 pb-20 pt-16 text-[#201e1d] sm:px-8 md:pb-28">
+        <div className="mx-auto max-w-[1120px] py-14 md:py-20">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Profile</p>
+          <h1 className="mt-4 max-w-2xl font-body text-4xl font-bold leading-[1.03] tracking-[-0.03em] sm:text-5xl md:text-6xl">Your Monereen account.</h1>
+          <div className="mt-10 grid gap-8 border-t-2 border-[#201e1d]/40 pt-6 md:grid-cols-[minmax(0,1fr)_18rem] md:gap-16">
+            <div>
+              <p className="max-w-xl text-sm leading-7 text-[#605d5d] md:text-base">
+                Account features are being prepared. This space will hold your orders, saved pieces, and personal details when customer accounts are available.
+              </p>
+              <Link href="/shop" className="mt-8 inline-flex bg-[#ec3013] px-6 py-3.5 text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800]">
+                Explore the collection
+              </Link>
+            </div>
+            <div className="border-t border-[#201e1d]/40 pt-5 md:border-t-0 md:border-l md:pl-8 md:pt-0">
+              <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Need help?</p>
+              <Link href="/pages/contact" className="mt-3 inline-block border-b border-[#201e1d] pb-1 text-sm font-semibold transition-colors hover:border-[#ec3013] hover:text-[#ec3013]">
+                Contact Monereen
+              </Link>
             </div>
           </div>
         </div>

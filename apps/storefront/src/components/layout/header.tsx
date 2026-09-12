@@ -3,13 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, List, X } from "@phosphor-icons/react";
+import { List, ShoppingBag, UserCircle, X } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import styles from "./header.module.css";
 
 const navigation = [
-  { label: "Magazine", href: "/" },
-  { label: "Archive", href: "/archive#image-index" },
+  { label: "Collections", href: "/archive#collections" },
+  { label: "Clothing", href: "/shop" },
+  { label: "Craft", href: "/crafts" },
+  { label: "Innovation", href: "/about#collaborate" },
   { label: "About", href: "/about" },
 ] as const;
 
@@ -72,15 +74,14 @@ export function Header() {
         </div>
 
         <div className={styles.actions}>
-          <a
-            href="https://www.instagram.com/monereenbd/"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.instagram}
-          >
-            Instagram
-            <ArrowUpRight size={13} weight="light" aria-hidden="true" />
-          </a>
+          <Link href="/cart" className={styles.actionLink} aria-label="View bag">
+            <ShoppingBag size={18} weight="light" aria-hidden="true" />
+            <span>Bag</span>
+          </Link>
+          <Link href="/account" className={styles.actionLink} aria-label="View profile">
+            <UserCircle size={19} weight="light" aria-hidden="true" />
+            <span>Profile</span>
+          </Link>
 
           <button
             type="button"
@@ -120,15 +121,10 @@ export function Header() {
           })}
         </ul>
 
-        <a
-          href="https://www.instagram.com/monereenbd/"
-          target="_blank"
-          rel="noreferrer"
-          className={styles.mobileInstagram}
-        >
-          Follow on Instagram
-          <ArrowUpRight size={16} weight="light" aria-hidden="true" />
-        </a>
+        <div className={styles.mobileActions}>
+          <Link href="/cart" onClick={() => setMenuOpen(false)}>Bag</Link>
+          <Link href="/account" onClick={() => setMenuOpen(false)}>Profile</Link>
+        </div>
       </div>
     </header>
   );

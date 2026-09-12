@@ -18,25 +18,21 @@ const violetBlur =
 
 const contents = [
   {
-    page: "08",
     title: "The Pivotal Loop",
     note: "A personal passion becomes a house with a longer view.",
     href: "#manifesto",
   },
   {
-    page: "18",
     title: "Colour Has Memory",
     note: "Print, repetition, and the emotional force of a surface.",
     href: "#experience",
   },
   {
-    page: "32",
     title: "A Language of Cloth",
     note: "Construction and detail reveal the hand behind the work.",
     href: "#language-of-cloth",
   },
   {
-    page: "44",
     title: "The Working Edit",
     note: "Selected frames from the evolving Monereen archive.",
     href: "#working-edit",
@@ -97,18 +93,15 @@ export function MagazineExperience() {
       <main className={styles.page}>
         <section className={styles.cover}>
           <div className={styles.coverCopy}>
-            <div className={styles.issueMark}>
-              <span>Monereen Magazine</span>
-              <span>Issue 01 / August 2026</span>
-            </div>
+            <div className={styles.issueMark}><span>Monereen Magazine</span></div>
 
             <div className={styles.coverTitle}>
               <p className={styles.coverTheme}>Personal expression in cloth</p>
               <h1>
-                The pivotal <em>loop.</em>
+                The pivotal loop.
               </h1>
               <p className={styles.coverDeck}>
-                A house pauses, gathers its memory, and begins its next chapter with greater intention.
+                A record of cloth, colour, and the details that give each Monereen piece its voice.
               </p>
             </div>
 
@@ -128,9 +121,6 @@ export function MagazineExperience() {
               sizes="(max-width: 767px) 100vw, 66vw"
               className={styles.coverImage}
             />
-            <p className={styles.coverImageLine}>
-              Cloth, colour, and the confidence to remain personal.
-            </p>
           </MagazineHeroMedia>
         </section>
 
@@ -147,9 +137,8 @@ export function MagazineExperience() {
 
           <div className={styles.contentsGrid}>
             {contents.map((item, index) => (
-              <Reveal key={item.page} delay={index * 0.06} className={styles.contentItem}>
+              <Reveal key={item.title} delay={index * 0.06} className={styles.contentItem}>
                 <Link href={item.href}>
-                  <span className={styles.pageNumber}>{item.page}</span>
                   <span className={styles.contentTitle}>{item.title}</span>
                   <span className={styles.contentNote}>{item.note}</span>
                   <ArrowUpRight className={styles.contentArrow} size={18} weight="light" aria-hidden="true" />

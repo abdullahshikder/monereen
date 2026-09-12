@@ -18,9 +18,12 @@ import type {
 import { placeOrder, saveCheckoutDetails } from "./actions"
 
 const inputClass =
-  "w-full px-4 py-3 font-body text-sm bg-ivory border border-sand focus:border-charcoal outline-none"
+  "w-full border border-[#201e1d]/40 bg-[#eae9e9] px-4 py-3 font-body text-sm text-[#201e1d] outline-none focus:border-[#ec3013]"
+const fieldLabelClass =
+  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#605d5d]"
 
 const countries = [
+  ["bd", "Bangladesh"],
   ["dk", "Denmark"],
   ["fr", "France"],
   ["de", "Germany"],
@@ -42,106 +45,71 @@ function AddressFields({
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name={`${prefix}FirstName`}
-          defaultValue={address?.first_name ?? ""}
-          autoComplete={`${prefix} given-name`}
-          placeholder="First name"
-          required={required}
-          className={inputClass}
-        />
-        <input
-          name={`${prefix}LastName`}
-          defaultValue={address?.last_name ?? ""}
-          autoComplete={`${prefix} family-name`}
-          placeholder="Last name"
-          required={required}
-          className={inputClass}
-        />
+        <label>
+          <span className={fieldLabelClass}>First name</span>
+          <input name={`${prefix}FirstName`} defaultValue={address?.first_name ?? ""} autoComplete={`${prefix} given-name`} required={required} className={inputClass} />
+        </label>
+        <label>
+          <span className={fieldLabelClass}>Last name</span>
+          <input name={`${prefix}LastName`} defaultValue={address?.last_name ?? ""} autoComplete={`${prefix} family-name`} required={required} className={inputClass} />
+        </label>
       </div>
-      <input
-        name={`${prefix}Company`}
-        defaultValue={address?.company ?? ""}
-        autoComplete={`${prefix} organization`}
-        placeholder="Company (optional)"
-        className={inputClass}
-      />
-      <input
-        name={`${prefix}Address1`}
-        defaultValue={address?.address_1 ?? ""}
-        autoComplete={`${prefix} address-line1`}
-        placeholder="Address"
-        required={required}
-        className={inputClass}
-      />
-      <input
-        name={`${prefix}Address2`}
-        defaultValue={address?.address_2 ?? ""}
-        autoComplete={`${prefix} address-line2`}
-        placeholder="Apartment, suite, etc. (optional)"
-        className={inputClass}
-      />
+      <label>
+        <span className={fieldLabelClass}>Company (optional)</span>
+        <input name={`${prefix}Company`} defaultValue={address?.company ?? ""} autoComplete={`${prefix} organization`} className={inputClass} />
+      </label>
+      <label>
+        <span className={fieldLabelClass}>Address</span>
+        <input name={`${prefix}Address1`} defaultValue={address?.address_1 ?? ""} autoComplete={`${prefix} address-line1`} required={required} className={inputClass} />
+      </label>
+      <label>
+        <span className={fieldLabelClass}>Apartment, suite, etc. (optional)</span>
+        <input name={`${prefix}Address2`} defaultValue={address?.address_2 ?? ""} autoComplete={`${prefix} address-line2`} className={inputClass} />
+      </label>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name={`${prefix}City`}
-          defaultValue={address?.city ?? ""}
-          autoComplete={`${prefix} address-level2`}
-          placeholder="City"
-          required={required}
-          className={inputClass}
-        />
-        <input
-          name={`${prefix}Province`}
-          defaultValue={address?.province ?? ""}
-          autoComplete={`${prefix} address-level1`}
-          placeholder="State or province (optional)"
-          className={inputClass}
-        />
+        <label>
+          <span className={fieldLabelClass}>City</span>
+          <input name={`${prefix}City`} defaultValue={address?.city ?? ""} autoComplete={`${prefix} address-level2`} required={required} className={inputClass} />
+        </label>
+        <label>
+          <span className={fieldLabelClass}>State or province (optional)</span>
+          <input name={`${prefix}Province`} defaultValue={address?.province ?? ""} autoComplete={`${prefix} address-level1`} className={inputClass} />
+        </label>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input
-          name={`${prefix}PostalCode`}
-          defaultValue={address?.postal_code ?? ""}
-          autoComplete={`${prefix} postal-code`}
-          placeholder="Postal code"
-          required={required}
-          className={inputClass}
-        />
-        <select
-          name={`${prefix}CountryCode`}
-          defaultValue={address?.country_code ?? "dk"}
-          autoComplete={`${prefix} country`}
-          required={required}
-          className={inputClass}
-        >
-          {countries.map(([code, name]) => (
-            <option key={code} value={code}>
-              {name}
-            </option>
-          ))}
-        </select>
+        <label>
+          <span className={fieldLabelClass}>Postal code</span>
+          <input name={`${prefix}PostalCode`} defaultValue={address?.postal_code ?? ""} autoComplete={`${prefix} postal-code`} required={required} className={inputClass} />
+        </label>
+        <label>
+          <span className={fieldLabelClass}>Country</span>
+          <select name={`${prefix}CountryCode`} defaultValue={address?.country_code ?? "dk"} autoComplete={`${prefix} country`} required={required} className={inputClass}>
+            {countries.map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
-      <input
-        name={`${prefix}Phone`}
-        defaultValue={address?.phone ?? ""}
-        autoComplete={`${prefix} tel`}
-        placeholder="Phone (optional)"
-        className={inputClass}
-      />
+      <label>
+        <span className={fieldLabelClass}>Phone (optional)</span>
+        <input name={`${prefix}Phone`} defaultValue={address?.phone ?? ""} autoComplete={`${prefix} tel`} className={inputClass} />
+      </label>
     </div>
   )
 }
 
 function OrderSummary({ cart }: { cart: Cart }) {
   return (
-    <aside className="lg:sticky lg:top-24 h-fit bg-sand/50 p-8">
-      <h2 className="font-body text-xs uppercase tracking-widest text-stone mb-6">
+    <aside className="h-fit border border-[#201e1d]/40 p-6 lg:sticky lg:top-24">
+      <h2 className="font-body text-[11px] uppercase tracking-[0.14em] text-[#605d5d] mb-6">
         Order Summary
       </h2>
       <div className="space-y-5 mb-6">
         {(cart.items ?? []).map((item) => (
           <div key={item.id} className="flex gap-4">
-            <div className="relative w-16 h-20 bg-sand shrink-0 overflow-hidden">
+            <div className="relative h-20 w-16 shrink-0 overflow-hidden bg-[#d7d3d3] grayscale">
               {item.thumbnail && (
                 <Image
                   src={item.thumbnail}
@@ -167,7 +135,7 @@ function OrderSummary({ cart }: { cart: Cart }) {
           </div>
         ))}
       </div>
-      <div className="border-t border-sand pt-4 space-y-2">
+      <div className="space-y-2 border-t border-[#201e1d]/40 pt-4">
         <div className="flex justify-between font-body text-sm">
           <span className="text-stone">Items</span>
           <span>{formatAmount(cart.item_total ?? 0, cart.currency_code)}</span>
@@ -180,7 +148,7 @@ function OrderSummary({ cart }: { cart: Cart }) {
               : "Choose delivery"}
           </span>
         </div>
-        <div className="flex justify-between font-body text-base font-medium pt-3 border-t border-sand">
+        <div className="flex justify-between border-t border-[#201e1d]/40 pt-3 font-body text-base font-medium">
           <span>Total</span>
           <span>{formatAmount(cart.total ?? 0, cart.currency_code)}</span>
         </div>
@@ -301,7 +269,7 @@ function DeliveryStep({
       <button
         type="submit"
         disabled={!canPlaceOrder}
-        className="w-full bg-charcoal text-ivory font-body text-sm uppercase tracking-wider py-4 hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="w-full bg-[#ec3013] py-4 font-body text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800] disabled:cursor-not-allowed disabled:opacity-40"
       >
         Place order
       </button>
@@ -342,14 +310,13 @@ export default async function CheckoutPage({
   return (
     <>
       <Header />
-      <main className="pt-16">
-        <section className="py-section-md px-6">
-          <div className="max-w-5xl mx-auto">
-            <h1 className="font-heading text-4xl text-charcoal mb-4">Checkout</h1>
-            <p className="font-body text-sm text-stone mb-12">
-              {deliveryStep
-                ? "Step 2 of 2 · Delivery and payment"
-                : "Step 1 of 2 · Contact and address"}
+      <main className="bg-[#f3f2f2] pt-16 text-[#201e1d]">
+        <section className="mx-auto max-w-[1120px] px-5 py-14 sm:px-8 md:py-20">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.14em] text-[#7d7979]">Checkout</p>
+            <h1 className="mt-3 font-body text-4xl font-bold tracking-[-0.03em] sm:text-5xl">Your selection</h1>
+            <p className="mt-3 font-body text-sm text-[#605d5d] mb-12">
+              {deliveryStep ? "Delivery and payment" : "Contact and address"}
             </p>
 
             {(await searchParams).error && (
@@ -363,7 +330,7 @@ export default async function CheckoutPage({
               </p>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
               {deliveryStep ? (
                 <DeliveryStep
                   cart={cart}
@@ -376,15 +343,10 @@ export default async function CheckoutPage({
                     <h2 className="font-body text-xs uppercase tracking-widest text-stone mb-4">
                       Contact
                     </h2>
-                    <input
-                      type="email"
-                      name="email"
-                      defaultValue={cart.email ?? ""}
-                      autoComplete="email"
-                      placeholder="Email address"
-                      required
-                      className={inputClass}
-                    />
+                    <label>
+                      <span className={fieldLabelClass}>Email address</span>
+                      <input type="email" name="email" defaultValue={cart.email ?? ""} autoComplete="email" required className={inputClass} />
+                    </label>
                   </section>
 
                   <section>
@@ -423,7 +385,7 @@ export default async function CheckoutPage({
 
                   <button
                     type="submit"
-                    className="w-full bg-charcoal text-ivory font-body text-sm uppercase tracking-wider py-4 hover:bg-accent transition-colors"
+                    className="w-full bg-[#ec3013] py-4 font-body text-sm font-semibold text-[#f3f2f2] transition-colors hover:bg-[#ae1800]"
                   >
                     Continue to delivery
                   </button>
