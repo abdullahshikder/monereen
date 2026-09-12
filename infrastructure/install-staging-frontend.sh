@@ -105,7 +105,10 @@ WantedBy=multi-user.target
 EOF
 chmod 644 "$service"
 systemctl daemon-reload
-systemctl enable --now monereen-staging-storefront
+# `enable --now` starts an inactive unit but does not reload an already-running
+# process, so explicitly restart to apply the rewritten EnvironmentFile.
+systemctl enable monereen-staging-storefront
+systemctl restart monereen-staging-storefront
 
 if ! curl --fail --retry 30 --retry-connrefused --retry-delay 2 \
     --retry-max-time 90 --max-time 10 --output /dev/null \
