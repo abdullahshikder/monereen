@@ -18,12 +18,14 @@ node_bin="$runtime_dir/bin/node"
 corepack_bin="$runtime_dir/bin/corepack"
 frontend_env=/etc/monereen/staging-storefront.env
 backend_env=/etc/monereen/backend.env
+services_env=/etc/monereen/services.env
 service=/etc/systemd/system/monereen-staging-storefront.service
 
 for required in "$old_site" "$new_site" "$node_bin" "$corepack_bin"; do
     [[ -e "$required" ]] || { echo "Missing required file: $required" >&2; exit 1; }
 done
 [[ -f "$backend_env" ]] || { echo "Missing active backend environment: $backend_env" >&2; exit 1; }
+[[ -f "$services_env" ]] || { echo "Missing active services environment: $services_env" >&2; exit 1; }
 command -v certbot >/dev/null
 command -v nginx >/dev/null
 
@@ -62,11 +64,15 @@ runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
     MEDUSA_BACKEND_URL=http://127.0.0.1:9000 \
     "$corepack_bin" pnpm --filter storefront build
 
-cat > "$frontend_env" <<'EOF'
+publishable_key="$(sed -n 's/^MEDUSA_PUBLISHABLE_KEY=//p' "$services_env" | head -1)"
+[[ -n "$publishable_key" ]] || { echo "Missing MEDUSA_PUBLISHABLE_KEY in $services_env" >&2; exit 1; }
+
+cat > "$frontend_env" <<EOF
 NODE_ENV=production
 NEXT_DIST_DIR=.next-staging
 MEDUSA_BACKEND_URL=http://127.0.0.1:9000
 NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com
+MEDUSA_PUBLISHABLE_KEY=$publishable_key
 EOF
 chmod 600 "$frontend_env"
 
