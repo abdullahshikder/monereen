@@ -66,7 +66,7 @@ fi
 cp -p "$backend_env" "$env_backup"
 sed -i 's|^MINIO_ENDPOINT=.*|MINIO_ENDPOINT=https://monereen.com|' "$backend_env"
 sed -i 's|^MINIO_PORT=.*|MINIO_PORT=443|' "$backend_env"
-sed -i 's|^MINIO_FILE_URL=.*|MINIO_FILE_URL=https://monereen.com|' "$backend_env"
+sed -i 's|^MINIO_FILE_URL=.*|MINIO_FILE_URL=https://monereen.com/monereen-media|' "$backend_env"
 
 if ! systemctl restart "$medusa_service" || \
     ! curl --fail --retry 60 --retry-connrefused --retry-delay 2 \

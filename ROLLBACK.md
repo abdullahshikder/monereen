@@ -24,6 +24,8 @@
 
 **CORS header follow-up:** if the duplicate-header repair needs reversal, restore the installer’s `/etc/nginx/sites-available/monereen.com.before-minio-cors-headers.*` backup, run `nginx -t`, and reload nginx.
 
+**Public file URL follow-up:** if the media-path repair needs reversal, restore `/etc/monereen/backend.env.before-minio-public-file-url.*`, restart `monereen-medusa`, and verify `/health` returns 200.
+
 ## staging branch frontend — rollback plan
 
 **Revert to:** the static wireframe site and no `monereen-staging-storefront.service` unit.
