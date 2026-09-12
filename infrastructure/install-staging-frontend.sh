@@ -50,6 +50,7 @@ fi
 # Use the same Node runtime as production; Corepack supplies the repository's
 # pinned pnpm without installing a second system-wide toolchain.
 export PATH="$runtime_dir/bin:$PATH"
+cd "$repo"
 runuser -u shawon -- env PATH="$runtime_dir/bin:$PATH" \
     NEXT_DIST_DIR=.next-staging \
     NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://staging.monereen.com \
